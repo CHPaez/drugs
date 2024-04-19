@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Personas;
 
 use App\Http\Requests\CreategeneroRequest;
 use App\Http\Requests\UpdategeneroRequest;

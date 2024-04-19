@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Personas;
 
 use App\Models\personas;
 use App\Models\tipostelefonos;

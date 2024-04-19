@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Personas;
 
 use App\Http\Requests\CreateestadospersonasRequest;
 use App\Http\Requests\UpdateestadospersonasRequest;

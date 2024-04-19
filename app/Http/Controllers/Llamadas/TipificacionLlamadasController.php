@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Llamadas;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\drogueriaspersonas; 
@@ -50,7 +50,7 @@ class tipificacionllamadasController extends AppBaseController
      */
     public function create()
     {
-        // Obtener el nombre del usuario de la sesión actual
+        // Obtener el nombre del usuario de la sesiï¿½n actual
          $userId =  Auth::id();
          $drogueriaspersonas = drogueriaspersonas::all()->toArray();
          $personas = personas::all()->toArray();

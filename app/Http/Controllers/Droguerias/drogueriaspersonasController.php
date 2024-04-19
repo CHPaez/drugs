@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Droguerias;
 
 use App\Models\asociados;
 use App\Models\droguerias;
