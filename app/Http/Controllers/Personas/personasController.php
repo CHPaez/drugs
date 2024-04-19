@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Personas;
 
 use App\Models\Genero;
 use App\Models\TiposAsociados;
@@ -35,7 +35,7 @@ class personasController extends AppBaseController
     public function index(Request $request)
     {
         $personas = $this->personasRepository->all();
-        // Obtener solo los códigos de asociados como clave y valor
+        // Obtener solo los cï¿½digos de asociados como clave y valor
       
         $estadospersonas = EstadosPersonas::pluck('EsEstado', 'id');
         $tiposasociados = tiposasociados::pluck('TaNombre', 'id');
@@ -55,7 +55,7 @@ class personasController extends AppBaseController
      */
     public function create()
 {
-     // Obtener solo los nombres de los géneros
+     // Obtener solo los nombres de los gï¿½neros
      $generos = Genero::pluck('genombre', 'id');
      $tiposAsociados = TiposAsociados::pluck('TaNombre', 'id');
      $tiposIdentificaciones = tiposIdentificaciones::pluck('TiNombre', 'id');

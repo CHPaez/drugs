@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Llamadas;
 
 use App\Http\Requests\CreatetipostelefonosRequest;
 use App\Http\Requests\UpdatetipostelefonosRequest;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Personas;
 
 use App\Http\Requests\CreatetiposidentificacionesRequest;
 use App\Http\Requests\UpdatetiposidentificacionesRequest;

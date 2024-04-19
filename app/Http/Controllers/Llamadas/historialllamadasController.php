@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Llamadas;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -45,7 +45,7 @@ class historialllamadasController extends AppBaseController
     public function create()
     {
 
-        // Obtener el nombre del usuario de la sesión actual
+        // Obtener el nombre del usuario de la sesiï¿½n actual
     $userId =  Auth::id();
 
         return view('historialllamadas.create')

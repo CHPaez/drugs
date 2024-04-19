@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Droguerias;
 
 use App\Models\tiposdroguerias;
 use App\Models\tiposidentificaciones;
