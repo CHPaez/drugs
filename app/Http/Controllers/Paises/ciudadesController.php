@@ -33,7 +33,7 @@ class ciudadesController extends AppBaseController
     {
         $ciudades = $this->ciudadesRepository->all();
 
-        return view('ciudades.index')
+        return view('paises.ciudades.index')
             ->with('ciudades', $ciudades);
     }
 
@@ -46,7 +46,7 @@ class ciudadesController extends AppBaseController
     {
         $departamentos = departamentos::pluck('DepDepartamento', 'id');
 
-        return view('ciudades.create')
+        return view('paises.ciudades.create')
         ->with('departamentos', $departamentos);
     }
 
@@ -85,7 +85,7 @@ class ciudadesController extends AppBaseController
             return redirect(route('ciudades.index'));
         }
 
-        return view('ciudades.show')->with('ciudades', $ciudades);
+        return view('paises.ciudades.show')->with('ciudades', $ciudades);
     }
 
     /**
@@ -105,7 +105,7 @@ class ciudadesController extends AppBaseController
             return redirect(route('ciudades.index'));
         }
 
-        return view('ciudades.edit')->with('ciudades', $ciudades);
+        return view('paises.ciudades.edit')->with('ciudades', $ciudades);
     }
 
     /**

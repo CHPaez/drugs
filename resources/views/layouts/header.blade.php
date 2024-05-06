@@ -28,8 +28,8 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm d-flex flex-wrap">
-            <div class="container">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Drugs') }}
                 </a>
@@ -37,72 +37,70 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     @if (Auth::check())
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('personas.index') }}">{{ __('Personas') }}</a>
+                    <ul class="navbar-nav">
+                        <!--Personas-->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Personas
+                            </a>
+                            <ul class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ route('personas.index') }}">{{ __('Personas') }}</a>
+                                <a class="dropdown-item" href="{{ route('tiposidentificaciones.index') }}">{{ __('Tipos de Identificaciones') }}</a>
+                                <a class="dropdown-item" href="{{ route('generos.index') }}">{{ __('Generos') }}</a>
+                                <a class="dropdown-item" href="{{ route('estadospersonas.index') }}">{{ __('Estados Personas') }}</a>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('tiposasociados.index') }}">{{ __('Tipos Asociados') }}</a>
+                        
+                        <!--Asociados-->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Asociados
+                            </a>
+                            <ul class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ route('tiposasociados.index') }}">{{ __('Tipos Asociados') }}</a>
+                                <a class="dropdown-item" href="{{ route('asociados.index') }}">{{ __('Asociados') }}</a>
+                            </ul>
+                        </li>                        
+
+                        <!--Droguerias-->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Droguerias
+                            </a>
+                            <ul class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ route('tiposdroguerias.index') }}">{{ __('Tipos Droguerias') }}</a>
+                                <a class="dropdown-item" href="{{ route('droguerias.index') }}">{{ __('Droguerias') }}</a>
+                                <a class="dropdown-item" href="{{ route('drogueriaspersonas.index') }}">{{ __('Droguerias Personas') }}</a>                
+                            </ul>
+                        </li>     
+                        
+                        <!--Paises-->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Paises
+                            </a>
+                            <ul class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ route('paises.index') }}">{{ __('Paises') }}</a>
+                                <a class="dropdown-item" href="{{ route('departamentos.index') }}">{{ __('Departamentos') }}</a>
+                                <a class="dropdown-item" href="{{ route('ciudades.index') }}">{{ __('Ciudades') }}</a>
+                                <a class="dropdown-item" href="{{ route('indicativosciudades.index') }}">{{ __('Indicativos Ciudades') }}</a>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('tiposidentificaciones.index') }}">{{ __('Tipos de Identificaciones') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('generos.index') }}">{{ __('Generos') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('asociados.index') }}">{{ __('Asociados') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('estadospersonas.index') }}">{{ __('Estados Personas') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('tiposdroguerias.index') }}">{{ __('Tipos Droguerias') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('droguerias.index') }}">{{ __('Droguerias') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('drogueriaspersonas.index') }}">{{ __('Droguerias Personas') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('paises.index') }}">{{ __('Paises') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('departamentos.index') }}">{{ __('Departamentos') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('ciudades.index') }}">{{ __('Ciudades') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('historialllamadas.index') }}">{{ __('Historial LLamadas') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('indicativosciudades.index') }}">{{ __('Indicativos Ciudades') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('tipostelefonos.index') }}">{{ __('Tipos Telefonos') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('telefonopersonas.index') }}">{{ __('Telefonos') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('tipificacionllamadas.index') }}">{{ __('Tipificacion Llamadas') }}</a>
+                        
+                        <!--Llamadas-->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Llamadas
+                            </a>
+                            <ul class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ route('historialllamadas.index') }}">{{ __('Historial LLamadas') }}</a>
+                                <a class="dropdown-item" href="{{ route('tipostelefonos.index') }}">{{ __('Tipos Telefonos') }}</a>
+                                <a class="dropdown-item" href="{{ route('tipificacionllamadas.index') }}">{{ __('Tipificacion Llamadas') }}</a>
+                            </ul>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -120,21 +118,19 @@
                                     </form>
                                 </div>
                             </li>
+                    </ul>        
+                    @else
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </li>
                     </ul>
                     @endif
                 </div>
             </div>
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                    @auth
-                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                        @endif
-                    @endauth
-                </div>
         </nav>
         <main class="py-4">
             @yield('content')

@@ -1,43 +1,43 @@
 <!-- Id Field -->
 <div class="col-sm-12">
     {!! Form::label('Id', 'Id:') !!}
-    <p>{{ $persona->Id }}</p>
+    <p>{{ $personas->Id }}</p>
 </div>
 
 <!-- Petipoasociado Field -->
 <div class="col-sm-12">
     {!! Form::label('PeTipoAsociado', 'Petipoasociado:') !!}
-    <p>{{ $persona->PeTipoAsociado }}</p>
+    <p>{{ $personas->PeTipoAsociado }}</p>
 </div>
 
 <!-- Petipoidentificacion Field -->
 <div class="col-sm-12">
     {!! Form::label('PeTipoIdentificacion', 'Petipoidentificacion:') !!}
-    <p>{{ $persona->PeTipoIdentificacion }}</p>
+    <p>{{ $personas->PeTipoIdentificacion }}</p>
 </div>
 
 <!-- Penumeroidentificacion Field -->
 <div class="col-sm-12">
     {!! Form::label('PeNumeroIdentificacion', 'Penumeroidentificacion:') !!}
-    <p>{{ $persona->PeNumeroIdentificacion }}</p>
+    <p>{{ $personas->PeNumeroIdentificacion }}</p>
 </div>
 
 <!-- Pegenero Field -->
 <div class="col-sm-12">
     {!! Form::label('PeGenero', 'Pegenero:') !!}
-    <p>{{ $persona->PeGenero }}</p>
+    <p>{{ $personas->PeGenero }}</p>
 </div>
 
 <!-- Penombre Field -->
 <div class="col-sm-12">
     {!! Form::label('PeNombre', 'Penombre:') !!}
-    <p>{{ $persona->PeNombre }}</p>
+    <p>{{ $personas->PeNombre }}</p>
 </div>
 
 <!-- Peapellido Field -->
 <div class="col-sm-12">
     {!! Form::label('PeApellido', 'Peapellido:') !!}
-    <p>{{ $persona->PeApellido }}</p>
+    <p>{{ $personas->PeApellido }}</p>
 </div>
 
 <!-- Pecorreo Field -->
@@ -49,12 +49,12 @@
 <!-- Created At Field -->
 <div class="col-sm-12">
     {!! Form::label('created_at', 'Created At:') !!}
-    <p>{{ $persona->created_at }}</p>
+    <p>{{ $personas->created_at }}</p>
 </div>
 
 <!-- Updated At Field -->
 <div class="col-sm-12">
     {!! Form::label('updated_at', 'Updated At:') !!}
-    <p>{{ $persona->updated_at }}</p>
+    <p>{{ $personas->updated_at }}</p>
 </div>
 

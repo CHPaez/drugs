@@ -33,7 +33,7 @@ class historialllamadasController extends AppBaseController
     {
         $historialllamadas = $this->historialllamadasRepository->all();
 
-        return view('historialllamadas.index')
+        return view('llamadas.historialllamadas.index')
             ->with('historialllamadas', $historialllamadas);
     }
 
@@ -48,7 +48,7 @@ class historialllamadasController extends AppBaseController
         // Obtener el nombre del usuario de la sesi�n actual
     $userId =  Auth::id();
 
-        return view('historialllamadas.create')
+        return view('llamadas.historialllamadas.create')
         ->with('userId', $userId);
     }
 
@@ -87,7 +87,7 @@ class historialllamadasController extends AppBaseController
             return redirect(route('historialllamadas.index'));
         }
 
-        return view('historialllamadas.show')->with('historialllamadas', $historialllamadas);
+        return view('llamadas.historialllamadas.show')->with('historialllamadas', $historialllamadas);
     }
 
     /**
@@ -107,7 +107,7 @@ class historialllamadasController extends AppBaseController
             return redirect(route('historialllamadas.index'));
         }
 
-        return view('historialllamadas.edit')->with('historialllamadas', $historialllamadas);
+        return view('llamadas.historialllamadas.edit')->with('historialllamadas', $historialllamadas);
     }
 
     /**

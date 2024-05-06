@@ -17,8 +17,6 @@
     </section>
 
     <!-- Persona Asociada Field -->
-    
-
         @include('flash::message')
 
         <div class="clearfix"></div>

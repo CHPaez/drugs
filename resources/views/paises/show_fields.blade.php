@@ -1,13 +1,13 @@
 <!-- Id Field -->
 <div class="col-sm-12">
     {!! Form::label('Id', 'Id:') !!}
-    <p>{{ $paise->Id }}</p>
+    <p>{{ $paises->Id }}</p>
 </div>
 
 <!-- Panombre Field -->
 <div class="col-sm-12">
     {!! Form::label('PaNombre', 'Panombre:') !!}
-    <p>{{ $paise->PaNombre }}</p>
+    <p>{{ $paises->PaNombre }}</p>
 </div>
 
 <!-- Created At Field -->
@@ -19,6 +19,6 @@
 <!-- Updated At Field -->
 <div class="col-sm-12">
     {!! Form::label('updated_at', 'Updated At:') !!}
-    <p>{{ $paise->updated_at }}</p>
+    <p>{{ $paises->updated_at }}</p>
 </div>
 

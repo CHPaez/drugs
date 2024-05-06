@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @package App\Models
  * @version April 2, 2024, 7:15 pm UTC
  *
- * @property bigIncrements $Id
+ * @property string $Id
  * @property string $EsEstado
  */
 class estadospersonas extends Model
@@ -34,6 +34,7 @@ class estadospersonas extends Model
      * @var array
      */
     protected $casts = [
+        'Id'=> 'string',
         'EsEstado' => 'string'
     ];
 
@@ -43,6 +44,7 @@ class estadospersonas extends Model
      * @var array
      */
     public static $rules = [
+        'Id'=> 'string',
         'EsEstado' => 'required'
     ];
 

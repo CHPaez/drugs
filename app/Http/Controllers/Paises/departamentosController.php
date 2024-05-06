@@ -34,7 +34,7 @@ class departamentosController extends AppBaseController
         $departamentos = $this->departamentosRepository->all();
         
 
-        return view('departamentos.index') 
+        return view('paises.departamentos.index') 
             ->with('departamentos', $departamentos);
     }
 
@@ -47,7 +47,7 @@ class departamentosController extends AppBaseController
     {
         $paises = paises::pluck('PaNombre', 'id');
 
-        return view('departamentos.create')
+        return view('paises.departamentos.create')
         ->with('paises', $paises);
     }
 
@@ -86,7 +86,7 @@ class departamentosController extends AppBaseController
             return redirect(route('departamentos.index'));
         }
 
-        return view('departamentos.show')->with('departamentos', $departamentos);
+        return view('paises.departamentos.show')->with('departamentos', $departamentos);
     }
 
     /**
@@ -99,6 +99,7 @@ class departamentosController extends AppBaseController
     public function edit($id)
     {
         $departamentos = $this->departamentosRepository->find($id);
+        $paises = paises::pluck('PaNombre', 'id');
 
         if (empty($departamentos)) {
             Flash::error('Departamentos not found');
@@ -106,7 +107,9 @@ class departamentosController extends AppBaseController
             return redirect(route('departamentos.index'));
         }
 
-        return view('departamentos.edit')->with('departamentos', $departamentos);
+        return view('paises.departamentos.edit')
+        ->with('departamentos', $departamentos)
+        ->with("paises",$paises);
     }
 
     /**

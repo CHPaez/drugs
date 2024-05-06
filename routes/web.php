@@ -31,7 +31,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
     //Llamadas
     Route::resource('historialllamadas', App\Http\Controllers\Llamadas\historialllamadasController::class);
     Route::resource('tipostelefonos', App\Http\Controllers\Llamadas\tipostelefonosController::class);
-    Route::resource('telefonopersonas', App\Http\Controllers\Llamadas\telefonopersonasController::class);
+    //Route::resource('telefonopersonas', App\Http\Controllers\Llamadas\telefonopersonasController::class);
     Route::resource('tipificacionLlamadas', App\Http\Controllers\Llamadas\TipificacionLlamadasController::class);
     
 }

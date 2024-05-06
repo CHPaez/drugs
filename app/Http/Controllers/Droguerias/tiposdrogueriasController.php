@@ -31,7 +31,7 @@ class tiposdrogueriasController extends AppBaseController
     {
         $tiposdroguerias = $this->tiposdrogueriasRepository->all();
 
-        return view('tiposdroguerias.index')
+        return view('droguerias.tiposdroguerias.index')
             ->with('tiposdroguerias', $tiposdroguerias);
     }
 
@@ -42,7 +42,7 @@ class tiposdrogueriasController extends AppBaseController
      */
     public function create()
     {
-        return view('tiposdroguerias.create');
+        return view('droguerias.tiposdroguerias.create');
     }
 
     /**
@@ -80,7 +80,7 @@ class tiposdrogueriasController extends AppBaseController
             return redirect(route('tiposdroguerias.index'));
         }
 
-        return view('tiposdroguerias.show')->with('tiposdroguerias', $tiposdroguerias);
+        return view('droguerias.tiposdroguerias.show')->with('tiposdroguerias', $tiposdroguerias);
     }
 
     /**
@@ -100,7 +100,7 @@ class tiposdrogueriasController extends AppBaseController
             return redirect(route('tiposdroguerias.index'));
         }
 
-        return view('tiposdroguerias.edit')->with('tiposdroguerias', $tiposdroguerias);
+        return view('droguerias.tiposdroguerias.edit')->with('tiposdroguerias', $tiposdroguerias);
     }
 
     /**

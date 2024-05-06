@@ -1,30 +1,30 @@
 <!-- Drtipodrogueria Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('DrTipoDrogueria', 'Drtipodrogueria:') !!}
+<div class="form-group col-sm-4">
+    {!! Form::label('DrTipoDrogueria', 'Tipo:') !!}
     {!! Form::select('DrTipoDrogueria',$tiposdroguerias, null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Drcodigo Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('DrCodigo', 'Drcodigo:') !!}
+<div class="form-group col-sm-8">
+    {!! Form::label('DrCodigo', 'Codigo:') !!}
     {!! Form::number('DrCodigo', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Drnombre Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('DrNombre', 'Drnombre:') !!}
+    {!! Form::label('DrNombre', 'Nombre:') !!}
     {!! Form::text('DrNombre', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Drtipoidentificacion Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('DrTipoIdentificacion', 'Drtipoidentificacion:') !!}
+<div class="form-group col-sm-2">
+    {!! Form::label('DrTipoIdentificacion', 'Tipo de indentificacion:') !!}
     {!! Form::select('DrTipoIdentificacion',$tiposidentificaciones, null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Dridentificacion Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('DrIdentificacion', 'Dridentificacion:') !!}
+<div class="form-group col-sm-4">
+    {!! Form::label('DrIdentificacion', 'Identificacion:') !!}
     {!! Form::number('DrIdentificacion', null, ['class' => 'form-control']) !!}
 </div>
 

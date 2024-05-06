@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.header')
 
 @section('content')
     <section class="content-header">
@@ -17,7 +17,7 @@
 
         <div class="card">
 
-            {!! Form::model($persona, ['route' => ['personas.update', $persona->id], 'method' => 'patch']) !!}
+            {!! Form::model($persona, ['route' => ['personas.update', $persona->Id], 'method' => 'patch']) !!}
 
             <div class="card-body">
                 <div class="row">

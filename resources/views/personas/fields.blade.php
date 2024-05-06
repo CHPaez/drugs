@@ -46,4 +46,3 @@
     {!! Form::email('PeCorreo', null, ['class' => 'form-control']) !!}
 </div>
 
-

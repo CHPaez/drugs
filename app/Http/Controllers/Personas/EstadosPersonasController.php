@@ -31,7 +31,7 @@ class estadospersonasController extends AppBaseController
     {
         $estadospersonas = $this->estadospersonasRepository->all();
 
-        return view('estadospersonas.index')
+        return view('personas.estadospersonas.index')
             ->with('estadospersonas', $estadospersonas);
     }
 
@@ -42,7 +42,7 @@ class estadospersonasController extends AppBaseController
      */
     public function create()
     {
-        return view('estadospersonas.create');
+        return view('personas.estadospersonas.create');
     }
 
     /**
@@ -80,7 +80,7 @@ class estadospersonasController extends AppBaseController
             return redirect(route('estadospersonas.index'));
         }
 
-        return view('estadospersonas.show')->with('estadospersonas', $estadospersonas);
+        return view('personas.estadospersonas.show')->with('estadospersonas', $estadospersonas);
     }
 
     /**
@@ -100,7 +100,7 @@ class estadospersonasController extends AppBaseController
             return redirect(route('estadospersonas.index'));
         }
 
-        return view('estadospersonas.edit')->with('estadospersonas', $estadospersonas);
+        return view('personas.estadospersonas.edit')->with('estadospersonas', $estadospersonas);
     }
 
     /**

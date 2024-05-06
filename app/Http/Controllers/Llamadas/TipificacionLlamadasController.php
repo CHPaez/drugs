@@ -38,8 +38,7 @@ class tipificacionllamadasController extends AppBaseController
     {
         $tipificacionllamadas = $this->tipificacionllamadasRepository->all();
 
-        return view('tipificacionllamadas.index')
-        
+        return view('llamadas.tipificacionllamadas.index')
             ->with('tipificacionllamadas', $tipificacionllamadas);
     }
 
@@ -112,7 +111,7 @@ class tipificacionllamadasController extends AppBaseController
             return redirect(route('tipificacionllamadas.index'));
         }
 
-        return view('tipificacionllamadas.show')->with('tipificacionllamadas', $tipificacionllamadas);
+        return view('llamadas.tipificacionllamadas.show')->with('tipificacionllamadas', $tipificacionllamadas);
     }
 
     /**
@@ -132,7 +131,7 @@ class tipificacionllamadasController extends AppBaseController
             return redirect(route('tipificacionllamadas.index'));
         }
 
-        return view('tipificacionllamadas.edit')->with('tipificacionllamadas', $tipificacionllamadas);
+        return view('llamadas.tipificacionllamadas.edit')->with('tipificacionllamadas', $tipificacionllamadas);
     }
 
     /**

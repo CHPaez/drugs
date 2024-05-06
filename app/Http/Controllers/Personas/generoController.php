@@ -31,7 +31,7 @@ class generoController extends AppBaseController
     {
         $generos = $this->generoRepository->all();
 
-        return view('generos.index')
+        return view('personas.generos.index')
             ->with('generos', $generos);
     }
 
@@ -42,7 +42,7 @@ class generoController extends AppBaseController
      */
     public function create()
     {
-        return view('generos.create');
+        return view('personas.generos.create');
     }
 
     /**
@@ -80,7 +80,7 @@ class generoController extends AppBaseController
             return redirect(route('generos.index'));
         }
 
-        return view('generos.show')->with('genero', $genero);
+        return view('personas.generos.show')->with('genero', $genero);
     }
 
     /**
@@ -100,7 +100,7 @@ class generoController extends AppBaseController
             return redirect(route('generos.index'));
         }
 
-        return view('generos.edit')->with('genero', $genero);
+        return view('personas.generos.edit')->with('genero', $genero);
     }
 
     /**

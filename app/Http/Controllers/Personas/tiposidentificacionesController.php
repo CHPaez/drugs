@@ -31,7 +31,7 @@ class tiposidentificacionesController extends AppBaseController
     {
         $tiposidentificaciones = $this->tiposidentificacionesRepository->all();
 
-        return view('tiposidentificaciones.index')
+        return view('personas.tiposidentificaciones.index')
             ->with('tiposidentificaciones', $tiposidentificaciones);
     }
 
@@ -42,7 +42,7 @@ class tiposidentificacionesController extends AppBaseController
      */
     public function create()
     {
-        return view('tiposidentificaciones.create');
+        return view('personas.tiposidentificaciones.create');
     }
 
     /**
@@ -80,7 +80,7 @@ class tiposidentificacionesController extends AppBaseController
             return redirect(route('tiposidentificaciones.index'));
         }
 
-        return view('tiposidentificaciones.show')->with('tiposidentificaciones', $tiposidentificaciones);
+        return view('personas.tiposidentificaciones.show')->with('tiposidentificaciones', $tiposidentificaciones);
     }
 
     /**
@@ -100,7 +100,7 @@ class tiposidentificacionesController extends AppBaseController
             return redirect(route('tiposidentificaciones.index'));
         }
 
-        return view('tiposidentificaciones.edit')->with('tiposidentificaciones', $tiposidentificaciones);
+        return view('personas.tiposidentificaciones.edit')->with('tiposidentificaciones', $tiposidentificaciones);
     }
 
     /**

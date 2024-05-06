@@ -34,7 +34,7 @@ class indicativosciudadesController extends AppBaseController
         $indicativosciudades = $this->indicativosciudadesRepository->all();
         $ciudades = ciudades::pluck('CiuCiudad', 'id');
 
-        return view('indicativosciudades.index')
+        return view('paises.indicativosciudades.index')
             ->with('indicativosciudades', $indicativosciudades)
             ->with('ciudades', $ciudades);
     }
@@ -47,7 +47,7 @@ class indicativosciudadesController extends AppBaseController
     public function create()
     {
         $ciudades = ciudades::pluck('CiuCiudad', 'id');
-        return view('indicativosciudades.create')
+        return view('paises.indicativosciudades.create')
         ->with('ciudades', $ciudades);
     }
 
@@ -86,7 +86,7 @@ class indicativosciudadesController extends AppBaseController
             return redirect(route('indicativosciudades.index'));
         }
 
-        return view('indicativosciudades.show')->with('indicativosciudades', $indicativosciudades);
+        return view('paises.indicativosciudades.show')->with('indicativosciudades', $indicativosciudades);
     }
 
     /**
@@ -106,7 +106,7 @@ class indicativosciudadesController extends AppBaseController
             return redirect(route('indicativosciudades.index'));
         }
 
-        return view('indicativosciudades.edit')->with('indicativosciudades', $indicativosciudades);
+        return view('paises.indicativosciudades.edit')->with('indicativosciudades', $indicativosciudades);
     }
 
     /**

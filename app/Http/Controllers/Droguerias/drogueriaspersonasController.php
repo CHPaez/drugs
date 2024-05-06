@@ -35,7 +35,7 @@ class drogueriaspersonasController extends AppBaseController
     {
         $drogueriaspersonas = $this->drogueriaspersonasRepository->all();
 
-        return view('drogueriaspersonas.index')
+        return view('droguerias.drogueriaspersonas.index')
             ->with('drogueriaspersonas', $drogueriaspersonas);
     }
 
@@ -53,7 +53,7 @@ class drogueriaspersonasController extends AppBaseController
         $personas = personas::pluck('PeNumeroIdentificacion', 'id');
 
 
-        return view('drogueriaspersonas.create')
+        return view('droguerias.drogueriaspersonas.create')
         ->with('asociados', $asociados)
         ->with('droguerias', $droguerias)
         ->with('personas', $personas);
@@ -94,7 +94,7 @@ class drogueriaspersonasController extends AppBaseController
             return redirect(route('drogueriaspersonas.index'));
         }
 
-        return view('drogueriaspersonas.show')->with('drogueriaspersonas', $drogueriaspersonas);
+        return view('droguerias.drogueriaspersonas.show')->with('drogueriaspersonas', $drogueriaspersonas);
     }
 
     /**
@@ -114,7 +114,7 @@ class drogueriaspersonasController extends AppBaseController
             return redirect(route('drogueriaspersonas.index'));
         }
 
-        return view('drogueriaspersonas.edit')->with('drogueriaspersonas', $drogueriaspersonas);
+        return view('droguerias.drogueriaspersonas.edit')->with('drogueriaspersonas', $drogueriaspersonas);
     }
 
     /**

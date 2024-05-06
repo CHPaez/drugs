@@ -31,7 +31,7 @@ class tipostelefonosController extends AppBaseController
     {
         $tipostelefonos = $this->tipostelefonosRepository->all();
 
-        return view('tipostelefonos.index')
+        return view('llamadas.tipostelefonos.index')
             ->with('tipostelefonos', $tipostelefonos);
     }
 
@@ -42,7 +42,7 @@ class tipostelefonosController extends AppBaseController
      */
     public function create()
     {
-        return view('tipostelefonos.create');
+        return view('llamadas.tipostelefonos.create');
     }
 
     /**
@@ -80,7 +80,7 @@ class tipostelefonosController extends AppBaseController
             return redirect(route('tipostelefonos.index'));
         }
 
-        return view('tipostelefonos.show')->with('tipostelefonos', $tipostelefonos);
+        return view('llamadas.tipostelefonos.show')->with('tipostelefonos', $tipostelefonos);
     }
 
     /**
@@ -100,7 +100,7 @@ class tipostelefonosController extends AppBaseController
             return redirect(route('tipostelefonos.index'));
         }
 
-        return view('tipostelefonos.edit')->with('tipostelefonos', $tipostelefonos);
+        return view('llamadas.tipostelefonos.edit')->with('tipostelefonos', $tipostelefonos);
     }
 
     /**

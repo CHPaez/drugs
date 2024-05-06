@@ -120,9 +120,9 @@ class personasController extends AppBaseController
     }
 
     // Obtener datos adicionales necesarios para la vista
-    $generos = genero::all();
-    $tiposAsociados = TiposAsociados::all();
-    $tiposIdentificaciones = TiposIdentificaciones::all();
+    $generos = genero::pluck('GeNombre','id');
+    $tiposAsociados = TiposAsociados::pluck('TaNombre','id');
+    $tiposIdentificaciones = TiposIdentificaciones::pluck('TiNombre','id');
     $estadospersonas = EstadosPersonas::pluck('EsEstado', 'id');
 
     return view('personas.edit', compact('persona', 'generos', 'tiposAsociados', 'tiposIdentificaciones', 'estadospersonas'));

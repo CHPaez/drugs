@@ -31,7 +31,7 @@ class tiposasociadosController extends AppBaseController
     {
         $tiposasociados = $this->tiposasociadosRepository->all();
 
-        return view('tiposasociados.index')
+        return view('asociados.tiposasociados.index')
             ->with('tiposasociados', $tiposasociados);
     }
 
@@ -42,7 +42,7 @@ class tiposasociadosController extends AppBaseController
      */
     public function create()
     {
-        return view('tiposasociados.create');
+        return view('asociados.tiposasociados.create');
     }
 
     /**
@@ -77,10 +77,10 @@ class tiposasociadosController extends AppBaseController
         if (empty($tiposasociados)) {
             Flash::error('Tiposasociados not found');
 
-            return redirect(route('tiposasociados.index'));
+            return redirect(route('tiposasociados'));
         }
 
-        return view('tiposasociados.show')->with('tiposasociados', $tiposasociados);
+        return view('asociados.tiposasociados.show')->with('tiposasociados', $tiposasociados);
     }
 
     /**
@@ -100,7 +100,7 @@ class tiposasociadosController extends AppBaseController
             return redirect(route('tiposasociados.index'));
         }
 
-        return view('tiposasociados.edit')->with('tiposasociados', $tiposasociados);
+        return view('asociados.tiposasociados.edit')->with('tiposasociados', $tiposasociados);
     }
 
     /**
