@@ -23,12 +23,13 @@ use Illuminate\Database\Eloquent\Model as Model;
 class personas extends Model
 {
 
+    public $primaryKey = "Id";
 
     public $table = 'personas';
     
 
     public $fillable = [
-        'id',
+        'Id',
         'PeEstadoPersona',
         'PeTipoAsociado',
         'PeTipoIdentificacion',

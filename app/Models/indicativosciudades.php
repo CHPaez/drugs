@@ -19,6 +19,7 @@ class indicativosciudades extends Model
 {
 
 
+    public $primaryKey = "Id";
     public $table = 'indicativosciudades';
     
 

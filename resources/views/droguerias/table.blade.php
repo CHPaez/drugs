@@ -28,14 +28,14 @@
                 {!! Form::open(['route' => ['droguerias.destroy', $drogueria->Id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
                     <a href="{{ route('droguerias.show', [$drogueria->Id]) }}"
-                       class='btn btn-primary btn-sm mr-1'>
-                        <i class="far fa-eye">Ver</i>
+                       class='btn btn-outline-primary btn-sm'>
+                       <i class="far fa-eye"></i> Ver
                     </a>
                     <a href="{{ route('droguerias.edit', [$drogueria->Id]) }}"
-                       class='btn btn-success btn-sm mr-1'>
-                        <i class="far fa-edit">Editar</i>
+                       class='btn btn-outline-success btn-sm'>
+                       <i class="far fa-edit"></i> Editar
                     </a>
-                    {!! Form::button('<i class="far fa-trash-alt"></i>Eliminar', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm mr-1', 'onclick' => "return confirm('Estas seguro?')"]) !!}
+                    {!! Form::button('<i class="far fa-trash-alt"></i>Eliminar', ['type' => 'submit', 'class' => 'btn btn-outline-danger btn-sm', 'onclick' => "return confirm('Estas seguro?')"]) !!}
                 </div>
                 {!! Form::close() !!}
             </td>

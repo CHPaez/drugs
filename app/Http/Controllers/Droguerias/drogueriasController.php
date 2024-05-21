@@ -104,7 +104,11 @@ class drogueriasController extends AppBaseController
      */
     public function edit($id)
     {
+
         $droguerias = $this->drogueriasRepository->find($id);
+        $tiposdroguerias = tiposdroguerias::pluck('TdNombre', 'id');
+        $tiposidentificaciones = tiposidentificaciones::pluck('TiNombre', 'id');
+        $ciudades = ciudades::pluck('CiuCiudad', 'id');
 
         if (empty($droguerias)) {
             Flash::error('Droguerias not found');
@@ -112,7 +116,11 @@ class drogueriasController extends AppBaseController
             return redirect(route('droguerias.index'));
         }
 
-        return view('droguerias.edit')->with('droguerias', $droguerias);
+        return view('droguerias.edit')
+        ->with('droguerias', $droguerias)
+        ->with('tiposdroguerias', $tiposdroguerias)
+        ->with('tiposidentificaciones', $tiposidentificaciones)
+        ->with('ciudades', $ciudades);   
     }
 
     /**

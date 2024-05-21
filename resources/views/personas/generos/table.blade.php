@@ -16,14 +16,14 @@
                     {!! Form::open(['route' => ['generos.destroy', $genero->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
                         <a href="{{ route('generos.show', [$genero->id]) }}"
-                            class="btn btn-primary btn-sm mr-1">
-                            Ver
+                            class="btn btn-outline-primary btn-sm">
+                            <i class="far fa-eye"></i> Ver
                         </a>
                         <a href="{{ route('generos.edit', [$genero->id]) }}"
-                            class="btn btn-success btn-sm mr-1">
-                            Editar
+                            class="btn btn-outline-success btn-sm">
+                            <i class="far fa-edit"></i> Editar
                         </a>
-                        {!! Form::button('<i class="far fa-trash-alt"></i>Eliminar', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Estas seguro de eliminarlo?')"]) !!}
+                        {!! Form::button('<i class="far fa-trash-alt"></i> Eliminar', ['type' => 'submit', 'class' => 'btn btn-outline-danger btn-sm', 'onclick' => "return confirm('Estas seguro de eliminarlo?')"]) !!}
                     </div>
                     {!! Form::close() !!}
                 </td>

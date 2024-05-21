@@ -97,7 +97,9 @@ class ciudadesController extends AppBaseController
      */
     public function edit($id)
     {
+
         $ciudades = $this->ciudadesRepository->find($id);
+        $departamentos = departamentos::pluck('DepDepartamento','id');
 
         if (empty($ciudades)) {
             Flash::error('Ciudades not found');
@@ -105,7 +107,9 @@ class ciudadesController extends AppBaseController
             return redirect(route('ciudades.index'));
         }
 
-        return view('paises.ciudades.edit')->with('ciudades', $ciudades);
+        return view('paises.ciudades.edit')
+        ->with('ciudades', $ciudades)
+        ->with('departamentos',$departamentos);
     }
 
     /**

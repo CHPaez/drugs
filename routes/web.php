@@ -3,9 +3,12 @@
 use Illuminate\Support\Facades\Route;
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    //Personas
+
+
     Route::middleware('auth')->group(function(){
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    
+    //Personas
     Route::resource('personas', App\Http\Controllers\Personas\personasController::class);
     Route::resource('generos', App\Http\Controllers\Personas\generoController::class);
     Route::resource('estadosPersonas', App\Http\Controllers\Personas\EstadosPersonasController::class);

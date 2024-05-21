@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model as Model;
 class drogueriaspersonas extends Model
 {
 
+    public $primaryKey = "Id";
 
     public $table = 'drogueriaspersonas';
     

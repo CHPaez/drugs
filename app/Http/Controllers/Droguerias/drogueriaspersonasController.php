@@ -106,7 +106,11 @@ class drogueriaspersonasController extends AppBaseController
      */
     public function edit($id)
     {
+
         $drogueriaspersonas = $this->drogueriaspersonasRepository->find($id);
+        $asociados = asociados::pluck('AsCodigo', 'id');
+        $droguerias = droguerias::pluck('DrNombre', 'id');
+        $personas = personas::pluck('PeNumeroIdentificacion', 'id');
 
         if (empty($drogueriaspersonas)) {
             Flash::error('Drogueriaspersonas not found');
@@ -114,7 +118,11 @@ class drogueriaspersonasController extends AppBaseController
             return redirect(route('drogueriaspersonas.index'));
         }
 
-        return view('droguerias.drogueriaspersonas.edit')->with('drogueriaspersonas', $drogueriaspersonas);
+        return view('droguerias.drogueriaspersonas.edit')
+        ->with('drogueriaspersonas', $drogueriaspersonas)
+        ->with('asociados', $asociados)
+        ->with('droguerias', $droguerias)
+        ->with('personas', $personas);;
     }
 
     /**

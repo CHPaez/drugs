@@ -3,36 +3,25 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
+                <div class="col-sm-6 d-flex">
                     <h1>Personas</h1>
-                </div>
-                <div class="col-sm-6">
-                    <a class="btn btn-primary float-right"
+                    <a class="btn btn-primary m-2"
                        href="{{ route('personas.create') }}">
-                        Add New
+                        Agregar
                     </a>
                 </div>
+
             </div>
         </div>
     </section>
-
+<br>
     <!-- Persona Asociada Field -->
         @include('flash::message')
 
         <div class="clearfix"></div>
 
-        <div class="card">
-            <div class="card-body p-0">
                 @include('personas.table')
 
-                <div class="card-footer clearfix">
-                    <div class="float-right">
-                        
-                    </div>
-                </div>
-            </div>
-
-        </div>
     </div>
 
 @endsection
