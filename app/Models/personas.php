@@ -9,10 +9,9 @@ use Illuminate\Database\Eloquent\Model as Model;
 /**
  * Class personas
  * @package App\Models
- * @version March 27, 2024, 6:52 pm UTC
+ * @version May 21, 2024, 6:23 am UTC
  *
  * @property bigIncrements $Id
- * @property integer $PeTipoAsociado
  * @property integer $PeTipoIdentificacion
  * @property integer $PeNumeroIdentificacion
  * @property string $PeGenero
@@ -28,17 +27,16 @@ class personas extends Model
     public $table = 'personas';
     
 
+
+
     public $fillable = [
         'Id',
-        'PeEstadoPersona',
-        'PeTipoAsociado',
         'PeTipoIdentificacion',
         'PeNumeroIdentificacion',
         'PeGenero',
         'PeNombre',
         'PeApellido',
         'PeCorreo'
-        
     ];
 
     /**
@@ -47,14 +45,12 @@ class personas extends Model
      * @var array
      */
     protected $casts = [
-        'PeEstadoPersona' => 'integer',
-        'PeTipoAsociado' => 'integer',
         'PeTipoIdentificacion' => 'integer',
         'PeNumeroIdentificacion' => 'integer',
         'PeGenero' => 'string',
         'PeNombre' => 'string',
         'PeApellido' => 'string',
-        'PeCorreo' => 'string'        
+        'PeCorreo' => 'string'
     ];
 
     /**
@@ -63,41 +59,23 @@ class personas extends Model
      * @var array
      */
     public static $rules = [
-        'PeEstadoPersona' => 'required',
-        'PeTipoAsociado' => 'required',
         'PeTipoIdentificacion' => 'required',
         'PeNumeroIdentificacion' => 'required',
-        'PeGenero' => 'required',
-        'PeNombre' => 'string',
+        'PeNombre' => 'required',
         'PeApellido' => 'string'
-        
     ];
 
-
     
-  
-    public function tiposasociados()
-    {
-        return $this->hasOne('App\Models\tiposasociados', 'id','PeTipoAsociado');
-    }
 
     public function TiposIdentificaciones()
-    {
-        return $this->hasOne('App\Models\TiposIdentificaciones', 'id','PeTipoIdentificacion');
-    }
-
-    public function Genero()
-    {
-        return $this->hasOne('App\Models\Genero', 'id','PeGenero');
-    }
-
-    public function EstadosPersonas()
-    {
-        return $this->hasOne('App\Models\EstadosPersonas', 'id','PeEstadoPersona');
-    }
- 
     
+        {
+            return $this->hasOne('App\Models\TiposIdentificaciones', 'id','PeTipoIdentificacion');
+        }
+
+        public function Genero()
+        {
+            return $this->hasOne('App\Models\Genero', 'id','PeGenero');
+        }
     } 
-
-    
 

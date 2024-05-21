@@ -17,7 +17,6 @@ class personasResource extends JsonResource
         return [
             'id' => $this->id,
             'Id' => $this->Id,
-            'PeTipoAsociado' => $this->PeTipoAsociado,
             'PeTipoIdentificacion' => $this->PeTipoIdentificacion,
             'PeNumeroIdentificacion' => $this->PeNumeroIdentificacion,
             'PeGenero' => $this->PeGenero,

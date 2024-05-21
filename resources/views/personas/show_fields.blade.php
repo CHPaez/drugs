@@ -4,11 +4,6 @@
     <p>{{ $personas->Id }}</p>
 </div>
 
-<!-- Petipoasociado Field -->
-<div class="col-sm-12">
-    {!! Form::label('PeTipoAsociado', 'Petipoasociado:') !!}
-    <p>{{ $personas->PeTipoAsociado }}</p>
-</div>
 
 <!-- Petipoidentificacion Field -->
 <div class="col-sm-12">

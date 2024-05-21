@@ -3,8 +3,6 @@
                     <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Estado Persona</th>
-                            <th>Tipo de asociado</th>
                             <th>Tipo de identificacion</th>
                             <th>Numero de indentificacion</th>
                             <th>Genero</th>
@@ -18,8 +16,6 @@
                         @foreach($personas as $persona)
                         <tr>
                             <td>{{ $persona->Id }}</td>
-                            <td>{{ $persona->EstadosPersonas->EsEstado }}</td>
-                            <td>{{ $persona->tiposasociados->TaNombre }}</td>
                             <td>{{ $persona->TiposIdentificaciones->TiNombre }}</td>
                             <td>{{ $persona->PeNumeroIdentificacion }}</td>
                             <td>{{ $persona->Genero->GeNombre }}</td>

@@ -15,8 +15,6 @@ class CreatePersonasTable extends Migration
     {
         Schema::create('personas', function (Blueprint $table) {
             $table->bigIncrements('Id');
-            $table->bigInteger('PeEstadoPersona')->unsigned();
-            $table->bigInteger('PeTipoAsociado')->unsigned();
             $table->bigInteger('PeTipoIdentificacion')->unsigned();
             $table->bigInteger('PeNumeroIdentificacion');
             $table->char('PeGenero', 1);
@@ -26,9 +24,7 @@ class CreatePersonasTable extends Migration
             $table->timestamps();
 
             $table->foreign('PeGenero')->references('id')->on('generos')->onDelete('no action')->onUpdate('no action');
-            $table->foreign('PeTipoAsociado')->references('id')->on('TiposAsociados')->onDelete('no action')->onUpdate('no action');
             $table->foreign('PeTipoIdentificacion')->references('id')->on('TiposIdentificaciones')->onDelete('no action')->onUpdate('no action');
-            $table->foreign('PeEstadoPersona')->references('id')->on('EstadosPersonas')->onDelete('no action')->onUpdate('no action');
         });
     }
 
