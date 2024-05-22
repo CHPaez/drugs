@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Personas;
 
 use App\Models\Genero;
-use App\Models\TiposAsociados;
 use App\Models\TiposIdentificaciones;
-use App\Models\EstadosPersonas; 
+
 
 use App\Http\Requests\CreatepersonasRequest;
 use App\Http\Requests\UpdatepersonasRequest;
@@ -37,13 +36,11 @@ class personasController extends AppBaseController
         $personas = $this->personasRepository->all();
         // Obtener solo los c�digos de asociados como clave y valor
       
-        $estadospersonas = EstadosPersonas::pluck('EsEstado', 'id');
-        $tiposasociados = tiposasociados::pluck('TaNombre', 'id');
+        
+        
     
         return view('personas.index')
-            ->with('personas', $personas)
-            ->with('estadospersonas', $estadospersonas)
-            ->with('tiposasociados', $tiposasociados); 
+            ->with('personas', $personas); 
     }
     
 
@@ -57,13 +54,12 @@ class personasController extends AppBaseController
 {
      // Obtener solo los nombres de los g�neros
      $generos = Genero::pluck('genombre', 'id');
-     $tiposAsociados = TiposAsociados::pluck('TaNombre', 'id');
      $tiposIdentificaciones = tiposIdentificaciones::pluck('TiNombre', 'id');
-     $estadospersonas = EstadosPersonas::pluck('EsEstado', 'id');
+     
 
    
 
-    return view('personas.create', compact('generos', 'tiposAsociados', 'tiposIdentificaciones','estadospersonas'));
+    return view('personas.create', compact('generos','tiposIdentificaciones' ));
 }
     /**
      * Store a newly created personas in storage.
@@ -121,11 +117,10 @@ class personasController extends AppBaseController
 
     // Obtener datos adicionales necesarios para la vista
     $generos = genero::pluck('GeNombre','id');
-    $tiposAsociados = TiposAsociados::pluck('TaNombre','id');
     $tiposIdentificaciones = TiposIdentificaciones::pluck('TiNombre','id');
-    $estadospersonas = EstadosPersonas::pluck('EsEstado', 'id');
+    
 
-    return view('personas.edit', compact('persona', 'generos', 'tiposAsociados', 'tiposIdentificaciones', 'estadospersonas'));
+    return view('personas.edit', compact('persona', 'generos','tiposIdentificaciones'));
 }
 
 

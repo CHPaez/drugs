@@ -20,6 +20,8 @@ class drogueriaspersonasResource extends JsonResource
             'DpAsociado' => $this->DpAsociado,
             'DpDrogueria' => $this->DpDrogueria,
             'DpPersona' => $this->DpPersona,
+            'DpEstadoPersona' => $this->DpEstadoPersona,
+            'DpTipoAsociado' => $this->DpTipoAsociado,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];

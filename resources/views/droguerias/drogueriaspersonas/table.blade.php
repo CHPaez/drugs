@@ -3,9 +3,11 @@
         <thead>
         <tr>
             <th>Id</th>
-        <th>Dpasociado</th>
-        <th>Dpdrogueria</th>
-        <th>Dppersona</th>
+        <th>Codigo Asociado</th>
+        <th>Drogueria</th>
+        <th>Persona</th>
+        <th>Estado persona</th>
+        <th>Tipo Asociado</th>
             <th colspan="3">Action</th>
         </tr>
         </thead>
@@ -13,9 +15,11 @@
         @foreach($drogueriaspersonas as $drogueriaspersona)
             <tr>
                 <td>{{ $drogueriaspersona->Id }}</td>
-            <td>{{ $drogueriaspersona->DpAsociado }}</td>
-            <td>{{ $drogueriaspersona->DpDrogueria }}</td>
-            <td>{{ $drogueriaspersona->DpPersona }}</td>
+            <td>{{ $drogueriaspersona->asociados->AsCodigo }}</td>
+            <td>{{ $drogueriaspersona->droguerias->DrNombre }}</td>
+            <td>{{ $drogueriaspersona->personas->PeNombre }}</td>
+            <td>{{ $drogueriaspersona->estadospersonas->EsEstado }}</td>
+            <td>{{ $drogueriaspersona->tiposasociados->TaNombre }}</td>
             <td width="120">
                 {!! Form::open(['route' => ['drogueriaspersonas.destroy', $drogueriaspersona->Id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

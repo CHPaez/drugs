@@ -4,12 +4,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Drogueriaspersonas</h1>
+                    <h3>Asociar Personas con Droguerias</h3>
                 </div>
                 <div class="col-sm-6">
                     <a class="btn btn-primary float-right"
                        href="{{ route('drogueriaspersonas.create') }}">
-                        Add New
+                        Agregar
                     </a>
                 </div>
             </div>

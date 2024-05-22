@@ -1,7 +1,7 @@
 <!-- Tiid Field -->
 <div class="col-sm-12">
     {!! Form::label('Tiid', 'Tiid:') !!}
-    <p>{{ $tiposidentificaciones->Tiid }}</p>
+    <p>{{ $tiposidentificaciones->id }}</p>
 </div>
 
 <!-- Tinombre Field -->

@@ -73,7 +73,8 @@ class personas extends Model
             return $this->hasOne('App\Models\TiposIdentificaciones', 'id','PeTipoIdentificacion');
         }
 
-        public function Genero()
+    public function Genero()
+    
         {
             return $this->hasOne('App\Models\Genero', 'id','PeGenero');
         }

@@ -69,6 +69,24 @@ class droguerias extends Model
         'DrIdentificacion' => 'required',
         'DrCiudad' => 'required'
     ];
+ 
+    public function TiposIdentificaciones()
+    
+        {
+            return $this->hasOne('App\Models\TiposIdentificaciones', 'id','DrTipoIdentificacion');
+        }
 
+    public function Ciudades()
+    
+        {
+            return $this->hasOne('App\Models\ciudades', 'id','DrCiudad');
+        }
+       
+    
+    public function tiposdroguerias()
+    
+        {
+            return $this->hasOne('App\Models\tiposdroguerias', 'id','DrTipoDrogueria');
+        }
     
 }

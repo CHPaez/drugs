@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Droguerias;
 use App\Models\asociados;
 use App\Models\droguerias;
 use App\Models\personas;
+use App\Models\TiposAsociados;
+use App\Models\EstadosPersonas;
 
 use App\Http\Requests\CreatedrogueriaspersonasRequest;
 use App\Http\Requests\UpdatedrogueriaspersonasRequest;
@@ -34,9 +36,12 @@ class drogueriaspersonasController extends AppBaseController
     public function index(Request $request)
     {
         $drogueriaspersonas = $this->drogueriaspersonasRepository->all();
+        $tiposasociados = tiposasociados::pluck('TaNombre', 'id');
+        
 
         return view('droguerias.drogueriaspersonas.index')
-            ->with('drogueriaspersonas', $drogueriaspersonas);
+            ->with('drogueriaspersonas', $drogueriaspersonas)
+            ->with('tiposasociados', $tiposasociados);
     }
 
     /**
@@ -51,11 +56,15 @@ class drogueriaspersonasController extends AppBaseController
         $asociados = asociados::pluck('AsCodigo', 'id');
         $droguerias = droguerias::pluck('DrNombre', 'id');
         $personas = personas::pluck('PeNumeroIdentificacion', 'id');
+        $tiposAsociados = TiposAsociados::pluck('TaNombre', 'id');
+        $estadospersonas = EstadosPersonas::pluck('EsEstado', 'id');
 
 
         return view('droguerias.drogueriaspersonas.create')
         ->with('asociados', $asociados)
         ->with('droguerias', $droguerias)
+        ->with('tiposasociados', $tiposAsociados)
+        ->with('estadospersonas', $estadospersonas)
         ->with('personas', $personas);
     }
 
@@ -111,6 +120,8 @@ class drogueriaspersonasController extends AppBaseController
         $asociados = asociados::pluck('AsCodigo', 'id');
         $droguerias = droguerias::pluck('DrNombre', 'id');
         $personas = personas::pluck('PeNumeroIdentificacion', 'id');
+        $tiposAsociados = TiposAsociados::pluck('TaNombre','id');
+        $estadospersonas = EstadosPersonas::pluck('EsEstado', 'id');
 
         if (empty($drogueriaspersonas)) {
             Flash::error('Drogueriaspersonas not found');
@@ -122,6 +133,8 @@ class drogueriaspersonasController extends AppBaseController
         ->with('drogueriaspersonas', $drogueriaspersonas)
         ->with('asociados', $asociados)
         ->with('droguerias', $droguerias)
+        ->with('tiposasociados', $tiposAsociados)
+        ->with('estadospersonas', $estadospersonas)
         ->with('personas', $personas);;
     }
 

@@ -6,19 +6,19 @@
 
 <!-- Dpasociado Field -->
 <div class="col-sm-12">
-    {!! Form::label('DpAsociado', 'Dpasociado:') !!}
+    {!! Form::label('DpAsociado', 'Codigo Asociado:') !!}
     <p>{{ $drogueriaspersonas->DpAsociado }}</p>
 </div>
 
 <!-- Dpdrogueria Field -->
 <div class="col-sm-12">
-    {!! Form::label('DpDrogueria', 'Dpdrogueria:') !!}
+    {!! Form::label('DpDrogueria', 'Drogueria:') !!}
     <p>{{ $drogueriaspersonas->DpDrogueria }}</p>
-</div>
+</div> 
 
 <!-- Dppersona Field -->
 <div class="col-sm-12">
-    {!! Form::label('DpPersona', 'Dppersona:') !!}
+    {!! Form::label('DpPersona', 'Persona:') !!}
     <p>{{ $drogueriaspersonas->DpPersona }}</p>
 </div>
 

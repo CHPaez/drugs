@@ -16,9 +16,11 @@ class CreateDrogueriaspersonasTable extends Migration
     {
         Schema::create('drogueriaspersonas', function (Blueprint $table) {
             $table->bigIncrements('Id');
-            $table->bigInteger('DpAsociado')->unsigned();
+            			$table->bigInteger('DpAsociado')->unsigned();
             $table->bigInteger('DpDrogueria')->unsigned();
             $table->bigInteger('DpPersona')->unsigned();
+$table->bigInteger('DpEstadoPersona')->unsigned();
+$table->bigInteger('DpTipoAsociado')->unsigned();
             $table->timestamps();
 
 
@@ -26,6 +28,9 @@ class CreateDrogueriaspersonasTable extends Migration
             $table->foreign('DpDrogueria')->references('Id')->on('droguerias')->onDelete('no action')->onUpdate('no action');
             $table->foreign('DpPersona')->references('Id')->on('personas')->onDelete('no action')->onUpdate('no action');
 
+$table->foreign('DpEstadoPersona')->references('Id')->on('estadospersonas')->onDelete('no action')->onUpdate('no action');
+
+$table->foreign('DpTipoAsociado')->references('Id')->on('tiposasociados')->onDelete('no action')->onUpdate('no action');
         });
     }
 

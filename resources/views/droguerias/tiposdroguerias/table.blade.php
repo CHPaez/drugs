@@ -3,7 +3,7 @@
         <thead>
         <tr>
             <th>Id</th>
-            <th>Tdnombre</th>
+            <th>Tipos Droguerias</th>
             <th colspan="3">Accciones</th>
         </tr>
         </thead>
