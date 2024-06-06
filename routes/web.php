@@ -42,7 +42,9 @@ Auth::routes();
        Route::resource('datosadicionales', App\Http\Controllers\Llamadas\datosadicionalesController::class);
        Route::resource('inscritos', App\Http\Controllers\Llamadas\inscritosController::class);
 
-    
+        //Administracion
+        Route::resource('Administracion', App\Http\Controllers\Administracion\AdministradorController::class);
+        Route::resource('Modulos', App\Http\Controllers\Administracion\ModulosController::class);
      
 }
 );
