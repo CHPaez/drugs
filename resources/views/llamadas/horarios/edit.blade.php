@@ -1,10 +1,11 @@
-@extends('layouts.header')
+@extends('/layouts/header')
+
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Crear Relacion Droguerias</h1>
+                    <h1>Editar Horarios</h1>
                 </div>
             </div>
         </div>
@@ -16,19 +17,17 @@
 
         <div class="card">
 
-            {!! Form::open(['route' => 'tiposasociados.store']) !!}
+            {!! Form::model($horarios, ['route' => ['horarios.update', $horarios->Id], 'method' => 'patch']) !!}
 
             <div class="card-body">
-
                 <div class="row">
-                    @include('asociados.tiposasociados.fields')
+                    @include('llamadas.horarios.fields')
                 </div>
-
             </div>
 
             <div class="card-footer">
                 {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('tiposasociados.index') }}" class="btn btn-default">Cancel</a>
+                <a href="{{ route('horarios.index') }}" class="btn btn-default">Cancel</a>
             </div>
 
             {!! Form::close() !!}

@@ -7,7 +7,7 @@
         <th>Drogueria</th>
         <th>Persona</th>
         <th>Estado persona</th>
-        <th>Tipo Asociado</th>
+        <th>Relacion Drogueria</th>
             <th colspan="3">Action</th>
         </tr>
         </thead>

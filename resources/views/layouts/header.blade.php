@@ -140,7 +140,7 @@
                         </a>
                         <div class="collapse" id="Asociados">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('tiposasociados.index') }}">{{ __('Tipos Asociados') }}</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="{{ route('tiposasociados.index') }}">{{ __('Relacion Drogueria') }}</a></li>
                                 <li class="nav-item"> <a class="nav-link" href="{{ route('asociados.index') }}">{{ __('Asociados') }}</a></li>
                             </ul>
                         </div>

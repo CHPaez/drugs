@@ -1,15 +1,15 @@
-@extends('layouts.header')
+@extends('layouts.app')
 
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Realacion Drogueria</h1>
+                    <h1>Modalidades Details</h1>
                 </div>
                 <div class="col-sm-6">
                     <a class="btn btn-default float-right"
-                       href="{{ route('tiposasociados.index') }}">
+                       href="{{ route('modalidades.index') }}">
                         Back
                     </a>
                 </div>
@@ -21,7 +21,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    @include('asociados.tiposasociados.show_fields')
+                    @include('modalidades.show_fields')
                 </div>
             </div>
         </div>
