@@ -1,6 +1,8 @@
 <?php
+ 
+ namespace App\Http\Controllers\Llamadas;
 
-namespace App\Http\Controllers\Llamadas;
+
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\drogueriaspersonas; 
@@ -8,6 +10,8 @@ use App\Models\Asociados;
 use App\Models\personas;
 use App\Models\droguerias;
 use App\Models\telefonopersonas;
+use App\Models\programas;
+use App\Models\user;
 
 use App\Http\Requests\CreatetipificacionllamadasRequest;
 use App\Http\Requests\UpdatetipificacionllamadasRequest;
@@ -47,14 +51,18 @@ class tipificacionllamadasController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
+  public function create()
     {
-        // Obtener el nombre del usuario de la sesi�n actual
-         $userId =  Auth::id();
+        // Obtener la lista de todos los usuarios para el select
+        $users = User::pluck('name', 'id');
+
+        // Obtener el usuario autenticado
+         $authenticatedUser = Auth::user();
          $drogueriaspersonas = drogueriaspersonas::all()->toArray();
          $personas = personas::all()->toArray();
          $droguerias = droguerias::all()->toArray();
          $telefonopersonas = telefonopersonas::all()->toArray();
+         $programas = programas::all()->pluck('PrNombre', 'id');
 
          $personasJson = json_encode($personas);
          $drogueriasJson  = json_encode($droguerias);
@@ -62,15 +70,17 @@ class tipificacionllamadasController extends AppBaseController
          //dd($telefonopersonasJson);
         
          $asociados = asociados::all()->pluck('AsCodigo', 'id');
-         
+          
 
-        return view('tipificacionllamadas.create')
-        ->with('userId', $userId)
+        return view('llamadas.tipificacionllamadas.create')
+        ->with('users', $users)
+        ->with('authenticatedUser', $authenticatedUser)
         ->with('asociados', $asociados)
         ->with('drogueriaspersonas', $drogueriaspersonas)
         ->with('personas', $personas)
         ->with('droguerias', $droguerias)
         ->with('telefonopersonas', $telefonopersonas)
+        ->with('programas', $programas)
         ->with('personasJson', $personasJson)
         ->with('drogueriasJson', $drogueriasJson)
         ->with('telefonopersonasJson', $telefonopersonasJson);

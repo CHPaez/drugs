@@ -2,24 +2,25 @@
     <table class="table" id="tipostelefonos-table">
         <thead>
         <tr>
-            <th>Id</th>
-        <th>Tttipo</th>
+            <th>Id</th> 
+        <th>Tipo Telefono</th>
             <th colspan="3">Action</th>
         </tr>
         </thead>
-        <tbody>
-        @foreach($tipostelefonos as $tipostelefonos)
+        <tbody> 
+            
+        @foreach($tipostelefonos as $tipostelefono)
             <tr>
-                <td>{{ $tipostelefonos->Id }}</td>
-            <td>{{ $tipostelefonos->TtTipo }}</td>
+                <td>{{ $tipostelefono->id }}</td>
+            <td>{{ $tipostelefono->TtTipo }}</td>
             <td width="120">
-                {!! Form::open(['route' => ['tipostelefonos.destroy', $tipostelefonos->Id], 'method' => 'delete']) !!}
+                {!! Form::open(['route' => ['tipostelefonos.destroy', $tipostelefono->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
-                    <a href="{{ route('tipostelefonos.show', [$tipostelefonos->Id]) }}"
+                    <a href="{{ route('tipostelefonos.show', [$tipostelefono->id]) }}"
                        class='btn btn-primary btn-sm mr-1'>
                         <i class="far fa-eye">Ver</i>
                     </a>
-                    <a href="{{ route('tipostelefonos.edit', [$tipostelefonos->Id]) }}"
+                    <a href="{{ route('tipostelefonos.edit', [$tipostelefono->id]) }}"
                        class='btn btn-success btn-sm mr-1'>
                         <i class="far fa-edit">Editar</i>
                     </a>

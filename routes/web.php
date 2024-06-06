@@ -11,9 +11,9 @@ Auth::routes();
     //Personas
     Route::resource('personas', App\Http\Controllers\Personas\personasController::class);
     Route::resource('generos', App\Http\Controllers\Personas\generoController::class);
-    Route::resource('estadosPersonas', App\Http\Controllers\Personas\EstadosPersonasController::class);
     Route::resource('tiposidentificaciones', App\Http\Controllers\Personas\tiposidentificacionesController::class);
     Route::resource('estadospersonas', App\Http\Controllers\Personas\estadospersonasController::class);
+    Route::resource('telefonopersonas', App\Http\Controllers\Personas\telefonopersonasController::class);
 
     //Asociados
     Route::resource('asociados', App\Http\Controllers\Asociados\asociadosController::class);
@@ -32,10 +32,25 @@ Auth::routes();
 
 
     //Llamadas
-    Route::resource('historialllamadas', App\Http\Controllers\Llamadas\historialllamadasController::class);
-    Route::resource('tipostelefonos', App\Http\Controllers\Llamadas\tipostelefonosController::class);
-    //Route::resource('telefonopersonas', App\Http\Controllers\Llamadas\telefonopersonasController::class);
-    Route::resource('tipificacionLlamadas', App\Http\Controllers\Llamadas\TipificacionLlamadasController::class);
+       Route::resource('tipostelefonos', App\Http\Controllers\Llamadas\tipostelefonosController::class);
+       Route::resource('tipificacionllamadas', App\Http\Controllers\Llamadas\tipificacionllamadasController::class);
+       Route::resource('programas', App\Http\Controllers\Llamadas\programasController::class);
+       Route::resource('estadostipificacions', App\Http\Controllers\Llamadas\estadostipificacionController::class);
+       Route::resource('causales', App\Http\Controllers\Llamadas\causalesController::class);
+       Route::resource('horarios', App\Http\Controllers\Llamadas\horariosController::class);
+       Route::resource('modalidades', App\Http\Controllers\Llamadas\modalidadesController::class);
+       Route::resource('datosadicionales', App\Http\Controllers\Llamadas\datosadicionalesController::class);
+       Route::resource('inscritos', App\Http\Controllers\Llamadas\inscritosController::class);
+
     
+     
 }
 );
+
+
+
+
+
+
+
+

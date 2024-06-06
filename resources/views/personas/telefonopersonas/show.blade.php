@@ -1,4 +1,4 @@
-@extends('layouts.header')
+@extends('/layouts/header')
 
 @section('content')
     <section class="content-header">
@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-sm-6">
                     <a class="btn btn-default float-right"
-                       href="{{ route('telefonopersonas.index') }}">
+                       href="{{ route('personas.telefonopersonas.index') }}">
                         Back
                     </a>
                 </div>
@@ -21,7 +21,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    @include('telefonopersonas.show_fields')
+                    @include('personas.telefonopersonas.show_fields')
                 </div>
             </div>
         </div>

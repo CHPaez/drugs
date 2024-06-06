@@ -52,8 +52,6 @@ Route::resource('departamentos', App\Http\Controllers\API\departamentosAPIContro
 Route::resource('ciudades', App\Http\Controllers\API\ciudadesAPIController::class);
 
 
-Route::resource('historialllamadas', App\Http\Controllers\API\historialllamadasAPIController::class);
-
 
 Route::resource('indicativosciudades', App\Http\Controllers\API\indicativosciudadesAPIController::class);
 
@@ -64,9 +62,6 @@ Route::resource('tipostelefonos', App\Http\Controllers\API\tipostelefonosAPICont
 Route::resource('telefonopersonas', App\Http\Controllers\API\telefonopersonasAPIController::class);
 
 
-Route::resource('tipificacion_llamadas', App\Http\Controllers\API\TipificacionLlamadasAPIController::class);
-
-
 Route::resource('tipificacionllamadas', App\Http\Controllers\API\tipificacionllamadasAPIController::class);
 
 
@@ -74,3 +69,26 @@ Route::resource('tiposdroguerias', App\Http\Controllers\API\tiposdrogueriasAPICo
 
 
 Route::resource('droguerias', App\Http\Controllers\API\drogueriasAPIController::class);
+
+
+Route::resource('programas', App\Http\Controllers\API\programasAPIController::class);
+
+
+Route::resource('estadostipificacions', App\Http\Controllers\API\estadostipificacionAPIController::class);
+
+
+Route::resource('causales', App\Http\Controllers\API\causalesAPIController::class);
+
+
+Route::resource('horarios', App\Http\Controllers\API\horariosAPIController::class);
+
+
+Route::resource('modalidades', App\Http\Controllers\API\modalidadesAPIController::class);
+
+
+Route::resource('datosadicionales', App\Http\Controllers\API\datosadicionalesAPIController::class);
+
+
+Route::resource('inscritos', App\Http\Controllers\API\inscritosAPIController::class);
+
+

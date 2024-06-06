@@ -97,7 +97,7 @@ class tipostelefonosController extends AppBaseController
         if (empty($tipostelefonos)) {
             Flash::error('Tipostelefonos not found');
 
-            return redirect(route('tipostelefonos.index'));
+            return redirect(route('llamadas.tipostelefonos.index'));
         }
 
         return view('llamadas.tipostelefonos.edit')->with('tipostelefonos', $tipostelefonos);
@@ -118,14 +118,14 @@ class tipostelefonosController extends AppBaseController
         if (empty($tipostelefonos)) {
             Flash::error('Tipostelefonos not found');
 
-            return redirect(route('tipostelefonos.index'));
+            return redirect(route('llamadas.tipostelefonos.index'));
         }
 
         $tipostelefonos = $this->tipostelefonosRepository->update($request->all(), $id);
 
         Flash::success('Tipostelefonos updated successfully.');
 
-        return redirect(route('tipostelefonos.index'));
+        return redirect(route('llamadas.tipostelefonos.index'));
     }
 
     /**

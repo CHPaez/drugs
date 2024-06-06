@@ -114,6 +114,7 @@
                                 <li class="nav-item"> <a class="nav-link" href="{{ route('tiposidentificaciones.index') }}">{{ __('Tipos de Identificaciones') }}</a></li>
                                 <li class="nav-item"> <a class="nav-link" href="{{ route('generos.index') }}">{{ __('Generos') }}</a></li>
                                 <li class="nav-item"> <a class="nav-link" href="{{ route('estadospersonas.index') }}">{{ __('Estados Personas') }}</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="{{ route('telefonopersonas.index') }}">{{ __('Telefono de personas') }}</a></li>
                             </ul>
                         </div>
                     </li>
@@ -167,9 +168,17 @@
                         </a>
                         <div class="collapse" id="Llamadas">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('historialllamadas.index') }}">{{ __('Historial LLamadas') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('tipostelefonos.index') }}">{{ __('Tipos Telefonos') }}</a></li>
                                 <li class="nav-item"> <a class="nav-link" href="{{ route('tipificacionllamadas.index') }}">{{ __('Tipificacion Llamadas') }}</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="{{ route('inscritos.index') }}">{{ __('Inscritos') }}</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="{{ route('programas.index') }}">{{ __('Programas') }}</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="{{ route('tipostelefonos.index') }}">{{ __('Tipos Telefonos') }}</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="{{ route('estadostipificacions.index') }}">{{ __('Estado Tipificaciones') }}</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="{{ route('causales.index') }}">{{ __('Causales Tipificacion') }}</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="{{ route('modalidades.index') }}">{{ __('Modalidades') }}</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="{{ route('horarios.index') }}">{{ __('Horarios') }}</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="{{ route('datosadicionales.index') }}">{{ __('Datos Adicionales') }}</a></li>
+                                
+                                
                             </ul>
                         </div>
                     </li>

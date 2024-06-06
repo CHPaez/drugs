@@ -8,7 +8,7 @@ use App\Repositories\BaseRepository;
 /**
  * Class tipificacionllamadasRepository
  * @package App\Repositories
- * @version April 4, 2024, 9:04 pm UTC
+ * @version May 23, 2024, 7:41 am UTC
 */
 
 class tipificacionllamadasRepository extends BaseRepository
@@ -21,7 +21,13 @@ class tipificacionllamadasRepository extends BaseRepository
         'TlUser',
         'TlCodigoAsociado',
         'TlDrogueria',
-        'TlPersona'
+        'TlPersonaContacto',
+        'TlTelefonoContacto',
+        'TlTelefonoWhatsapp',
+        'TlPrograma',
+        'TlCausal',
+        'TlEstadoTipificacion',
+        'TIObservaciones'
     ];
 
     /**

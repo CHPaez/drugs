@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model as Model;
 class telefonopersonas extends Model
 {
 
-
+    public $primaryKey = "id";
     public $table = 'telefonopersonas';
     
 

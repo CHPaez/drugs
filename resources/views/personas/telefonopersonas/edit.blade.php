@@ -1,4 +1,4 @@
-@extends('layouts.header')
+@extends('/layouts/header')
 
 @section('content')
     <section class="content-header">
@@ -21,7 +21,7 @@
 
             <div class="card-body">
                 <div class="row">
-                    @include('telefonopersonas.fields')
+                    @include('personas.telefonopersonas.fields')
                 </div>
             </div>
 
