@@ -173,6 +173,33 @@
                             </ul>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#AdminUser" aria-expanded="false" aria-controls="ui-basic">
+                            <span class="menu-title">Admin. Usuarios</span>
+                            <i class="menu-arrow"></i>
+                            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+                        </a>
+                        <div class="collapse" id="AdminUser">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="{{ route('Administracion.index') }}">{{ __('Usuarios') }}</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="#">{{ __('Roles de usuario') }}</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#Configuracion" aria-expanded="false" aria-controls="ui-basic">
+                            <span class="menu-title">Configuracion</span>
+                            <i class="menu-arrow"></i>
+                            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+                        </a>
+                        <div class="collapse" id="Configuracion">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="#">{{ __('Roles') }}</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="{{ route('Modulos.index') }}">{{ __('Modulos') }}</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="#">{{ __('Permisos del Modulo') }}</a></li>
+                            </ul>
+                        </div>
+                    </li>
 
                 </ul>
             </nav>

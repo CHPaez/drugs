@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Crear Tipos de asociados</h1>
+                    <h3>Agregar un nuevo usuario</h3>
                 </div>
             </div>
         </div>
@@ -16,19 +16,18 @@
 
         <div class="card">
 
-            {!! Form::open(['route' => 'tiposasociados.store']) !!}
+            {!! Form::open(['route' => 'Administracion.store']) !!}
 
             <div class="card-body">
 
                 <div class="row">
-                    @include('asociados.tiposasociados.fields')
+                    @include('Administracion.Usuarios.fields')
                 </div>
 
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('tiposasociados.index') }}" class="btn btn-default">Cancel</a>
+                {!! Form::submit('Guardar', ['class' => 'btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn']) !!}
             </div>
 
             {!! Form::close() !!}

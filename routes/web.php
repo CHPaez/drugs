@@ -36,6 +36,10 @@ Auth::routes();
     Route::resource('tipostelefonos', App\Http\Controllers\Llamadas\tipostelefonosController::class);
     //Route::resource('telefonopersonas', App\Http\Controllers\Llamadas\telefonopersonasController::class);
     Route::resource('tipificacionLlamadas', App\Http\Controllers\Llamadas\TipificacionLlamadasController::class);
-    
+
+    //Administracion
+    Route::resource('Administracion', App\Http\Controllers\Administracion\AdministradorController::class);
+    Route::resource('Modulos', App\Http\Controllers\Administracion\ModulosController::class);
+
 }
 );

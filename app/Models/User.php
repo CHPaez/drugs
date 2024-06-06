@@ -34,6 +34,12 @@ class User extends Authenticatable
     ];
 
     /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public static $rules = [];
+    /**
      * The attributes that should be cast.
      *
      * @var array<string, string>

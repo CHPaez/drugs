@@ -1,8 +1,8 @@
-<footer class="footer">
+{{--<footer class="footer">
     <div class="container-fluid d-flex justify-content-between">
         <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright © drugs 2024 </span>
    </div>
-</footer>
+</footer>--}}
 <!-- partial -->
 </div>
 <!-- main-panel ends -->
@@ -21,7 +21,7 @@
     <script src="{{ asset('assets/js/todolist.js') }}"></script>
     <!-- End custom js for this page -->
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script></body>
-
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script></body>
+    @yield('js')
 </html>

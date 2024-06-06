@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Administracion;
 
-use App\Http\Requests\CreateAdministracionRequest;
-use App\Http\Requests\UpdateAdministracionRequest;
-use App\Repositories\AdministracionRepository;
+use App\Http\Requests\CreateModulosRequest;
+use App\Http\Requests\UpdateModulosRequest;
+use App\Repositories\ModulosRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -13,40 +13,43 @@ use Flash;
 use Laracasts\Flash\Flash as FlashFlash;
 use Response;
 
-class AdministradorController extends AppBaseController
+class ModulosController extends AppBaseController
 {
-    private $AdministracionRepository;
+    private $ModulosRepository;
 
-    public function __construct(AdministracionRepository $AdministracionRepo)
+    public function __construct(ModulosRepository $ModulosRepo)
     {
-        $this->AdministracionRepository = $AdministracionRepo;
+       // $this->ModulosRepository = $ModulosRepo;
     }
     public function index(){
-        $datos_usuario = $this->AdministracionRepository->all();
-        return view('Administracion/Usuarios/index')->with('usuarios',$datos_usuario);
+        //$datos_usuario = $this->ModulosRepository->all();
+        return view('Administracion/Modulos/index');
     }
+
     public function edit($id){
-        $usuario = $this->AdministracionRepository->find($id);
+        $usuario = $this->ModulosRepository->find($id);
         
 
         return view('Administracion/usuarios/edit')->with('usuario',$usuario);
     }
-    public function update($id,UpdateAdministracionRequest $request){
-        $usuario = $this->AdministracionRepository->find($id);
+
+    public function update($id,UpdateModulosRequest $request){
+        $usuario = $this->ModulosRepository->find($id);
 
         if(empty($usuario)){
             Flash::error("El usuario no fue encontrad");
             return redirect(route('Administracion.index'));
         }
-        $this->AdministracionRepository->update($request->all(),$id);
+        $this->ModulosRepository->update($request->all(),$id);
 
         Flash::success("El usuario se actulizo correctamente.");
 
         return redirect(route('Administracion.index'));
 
     }
+
     public function create(){
-        return view('Administracion/Usuarios/create');
+        return view('Administracion/Modulos/create');
     }
 
     public function store(Request $request){
@@ -58,11 +61,14 @@ class AdministradorController extends AppBaseController
 
         $input = $request->all();
 
-        $this->AdministracionRepository->create($input);
+        $this->ModulosRepository->create($input);
 
         Flash::success("El usuario se agrego correctamente.");
 
         return redirect(route('Administracion.index'));
     }
-    
+
+    public function modulos(){
+        echo 'Hola';
+    }
 }
