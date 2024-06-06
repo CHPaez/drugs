@@ -24,6 +24,6 @@
 
 <!-- Dptipoasociado Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('DpTipoAsociado', 'Tipo Asociado:') !!}
+    {!! Form::label('DpTipoAsociado', 'Relacion Drogueria:') !!}
     {!! Form::select('DpTipoAsociado', $tiposasociados,null, ['class' => 'form-control']) !!}
 </div>

@@ -1,11 +1,11 @@
-@extends('layouts.header')
+@extends('layouts.app')
 
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Editar Relacion Droguerias</h1>
+                    <h1>Edit Modalidades</h1>
                 </div>
             </div>
         </div>
@@ -17,17 +17,17 @@
 
         <div class="card">
 
-            {!! Form::model($tiposasociados, ['route' => ['tiposasociados.update', $tiposasociados->id], 'method' => 'patch']) !!}
+            {!! Form::model($modalidades, ['route' => ['modalidades.update', $modalidades->id], 'method' => 'patch']) !!}
 
             <div class="card-body">
                 <div class="row">
-                    @include('asociados.tiposasociados.fields')
+                    @include('modalidades.fields')
                 </div>
             </div>
 
             <div class="card-footer">
                 {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('tiposasociados.index') }}" class="btn btn-default">Cancel</a>
+                <a href="{{ route('modalidades.index') }}" class="btn btn-default">Cancel</a>
             </div>
 
             {!! Form::close() !!}
