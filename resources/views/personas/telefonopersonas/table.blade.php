@@ -9,23 +9,23 @@
         <th>Tetelefono</th>
             <th colspan="3">Action</th>
         </tr>
-        </thead>
+        </thead> 
         <tbody>
-        @foreach($telefonopersonas as $telefonopersonas)
+        @foreach($telefonopersonas as $telefonopersona)
             <tr>
-                <td>{{ $telefonopersonas->Id }}</td>
-            <td>{{ $telefonopersonas->TePersona }}</td>
-            <td>{{ $telefonopersonas->TeTipo }}</td>
-            <td>{{ $telefonopersonas->TeIndicativo }}</td>
-            <td>{{ $telefonopersonas->TeTelefono }}</td>
+                <td>{{ $telefonopersona->id }}</td>
+            <td>{{ $telefonopersona->TePersona }}</td>
+            <td>{{ $telefonopersona->TeTipo }}</td>
+            <td>{{ $telefonopersona->TeIndicativo }}</td>
+            <td>{{ $telefonopersona->TeTelefono }}</td>
             <td width="120">
-                {!! Form::open(['route' => ['telefonopersonas.destroy', $telefonopersonas->Id], 'method' => 'delete']) !!}
+                {!! Form::open(['route' => ['telefonopersonas.destroy', $telefonopersona->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
-                    <a href="{{ route('telefonopersonas.show', [$telefonopersonas->Id]) }}"
+                    <a href="{{ route('telefonopersonas.show', [$telefonopersona->id]) }}"
                        class='btn btn-outline-primary btn-sm'>
                        <i class="far fa-eye"></i> Ver
                     </a>
-                    <a href="{{ route('telefonopersonas.edit', [$telefonopersonas->Id]) }}"
+                    <a href="{{ route('telefonopersonas.edit', [$telefonopersona->id]) }}"
                        class='btn btn-outline-success btn-sm'>
                        <i class="far fa-edit"></i> Editar
                     </a>

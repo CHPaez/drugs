@@ -1,4 +1,4 @@
-@extends('layouts.header')
+@extends('layouts.app')
 
 @section('content')
     <section class="content-header">
@@ -21,7 +21,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    @include('llamadas.historialllamadas.show_fields')
+                    @include('tipificacionllamadas.show_fields')
                 </div>
             </div>
         </div>

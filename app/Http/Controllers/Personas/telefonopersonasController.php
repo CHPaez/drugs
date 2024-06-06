@@ -36,7 +36,7 @@ class telefonopersonasController extends AppBaseController
     {
         $telefonopersonas = $this->telefonopersonasRepository->all();
 
-        return view('telefonopersonas.index')
+        return view('personas.telefonopersonas.index')
             ->with('telefonopersonas', $telefonopersonas);
     }
 
@@ -47,12 +47,14 @@ class telefonopersonasController extends AppBaseController
      */
     public function create()
     {
+        $telefonopersonas = $this->telefonopersonasRepository->all();
 
         $personas = personas::pluck('PeNumeroIdentificacion', 'id');
         $tipostelefonos = tipostelefonos::pluck('TtTipo', 'id');
         $indicativosciudades = indicativosciudades::pluck('IcIndicativo', 'id');
 
-        return view('telefonopersonas.create')
+        return view('personas.telefonopersonas.create')
+        ->with('telefonopersonas', $telefonopersonas)
         ->with('personas', $personas)
         ->with('tipostelefonos', $tipostelefonos)
         ->with('indicativosciudades', $indicativosciudades);
@@ -73,7 +75,7 @@ class telefonopersonasController extends AppBaseController
 
         Flash::success('Telefonopersonas saved successfully.');
 
-        return redirect(route('telefonopersonas.index'));
+        return redirect(route('personas.telefonopersonas.index'));
     }
 
     /**
@@ -87,13 +89,21 @@ class telefonopersonasController extends AppBaseController
     {
         $telefonopersonas = $this->telefonopersonasRepository->find($id);
 
+        $personas = personas::pluck('PeNumeroIdentificacion', 'id');
+        $tipostelefonos = tipostelefonos::pluck('TtTipo', 'id');
+        $indicativosciudades = indicativosciudades::pluck('IcIndicativo', 'id');$personas = personas::pluck('PeNumeroIdentificacion', 'id');
+
         if (empty($telefonopersonas)) {
             Flash::error('Telefonopersonas not found');
 
-            return redirect(route('telefonopersonas.index'));
+            return redirect(route('personas.telefonopersonas.index'));
         }
 
-        return view('telefonopersonas.show')->with('telefonopersonas', $telefonopersonas);
+        return view('personas.telefonopersonas.show')
+        ->with('telefonopersonas', $telefonopersonas)
+        ->with('personas', $personas)
+        ->with('tipostelefonos', $tipostelefonos)
+        ->with('indicativosciudades', $indicativosciudades);
     }
 
     /**
@@ -106,14 +116,22 @@ class telefonopersonasController extends AppBaseController
     public function edit($id)
     {
         $telefonopersonas = $this->telefonopersonasRepository->find($id);
+      
+        $personas = personas::pluck('PeNumeroIdentificacion', 'id');
+        $tipostelefonos = tipostelefonos::pluck('TtTipo', 'id');
+        $indicativosciudades = indicativosciudades::pluck('IcIndicativo', 'id');
 
         if (empty($telefonopersonas)) {
             Flash::error('Telefonopersonas not found');
 
-            return redirect(route('telefonopersonas.index'));
+            return redirect(route('personas.telefonopersonas.index'));
         }
 
-        return view('telefonopersonas.edit')->with('telefonopersonas', $telefonopersonas);
+        return view('personas.telefonopersonas.edit')
+        ->with('telefonopersonas', $telefonopersonas)
+        ->with('personas', $personas)
+        ->with('tipostelefonos', $tipostelefonos)
+        ->with('indicativosciudades', $indicativosciudades);
     }
 
     /**
@@ -131,7 +149,7 @@ class telefonopersonasController extends AppBaseController
         if (empty($telefonopersonas)) {
             Flash::error('Telefonopersonas not found');
 
-            return redirect(route('telefonopersonas.index'));
+            return redirect(route('ptelefonopersonas.index'));
         }
 
         $telefonopersonas = $this->telefonopersonasRepository->update($request->all(), $id);

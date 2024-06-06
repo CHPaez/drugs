@@ -9,13 +9,19 @@ use Illuminate\Database\Eloquent\Model as Model;
 /**
  * Class tipificacionllamadas
  * @package App\Models
- * @version April 4, 2024, 9:04 pm UTC
+ * @version May 23, 2024, 7:41 am UTC
  *
  * @property bigIncrements $Id
  * @property integer $TlUser
  * @property integer $TlCodigoAsociado
  * @property integer $TlDrogueria
- * @property integer $TlPersona
+ * @property integer $TlPersonaContacto
+ * @property integer $TlTelefonoContacto
+ * @property integer $TlTelefonoWhatsapp
+ * @property integer $TlPrograma
+ * @property integer $TlCausal
+ * @property integer $TlEstadoTipificacion
+ * @property string $TIObservaciones
  */
 class tipificacionllamadas extends Model
 {
@@ -31,7 +37,13 @@ class tipificacionllamadas extends Model
         'TlUser',
         'TlCodigoAsociado',
         'TlDrogueria',
-        'TlPersona'
+        'TlPersonaContacto',
+        'TlTelefonoContacto',
+        'TlTelefonoWhatsapp',
+        'TlPrograma',
+        'TlCausal',
+        'TlEstadoTipificacion',
+        'TIObservaciones'
     ];
 
     /**
@@ -43,7 +55,13 @@ class tipificacionllamadas extends Model
         'TlUser' => 'integer',
         'TlCodigoAsociado' => 'integer',
         'TlDrogueria' => 'integer',
-        'TlPersona' => 'integer'
+        'TlPersonaContacto' => 'integer',
+        'TlTelefonoContacto' => 'integer',
+        'TlTelefonoWhatsapp' => 'integer',
+        'TlPrograma' => 'integer',
+        'TlCausal' => 'integer',
+        'TlEstadoTipificacion' => 'integer',
+        'TIObservaciones' => 'string'
     ];
 
     /**
@@ -55,7 +73,12 @@ class tipificacionllamadas extends Model
         'TlUser' => 'required',
         'TlCodigoAsociado' => 'required',
         'TlDrogueria' => 'required',
-        'TlPersona' => 'required'
+        'TlPersonaContacto' => 'required',
+        'TlTelefonoContacto' => 'required',
+        'TlTelefonoWhatsapp' => 'required',
+        'TlPrograma' => 'required',
+        'TlCausal' => 'required',
+        'TlEstadoTipificacion' => 'required'
     ];
 
     

@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model as Model;
 class tipostelefonos extends Model
 {
 
-
+    public $primaryKey = "Id";
     public $table = 'tipostelefonos';
     
 

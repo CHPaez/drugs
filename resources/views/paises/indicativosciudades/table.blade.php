@@ -9,19 +9,19 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($indicativosciudades as $indicativosciudades)
+        @foreach($indicativosciudades as $indicativosciudade)
             <tr>
-                <td>{{ $indicativosciudades->Id }}</td>
-            <td>{{ $indicativosciudades->ciudades->CiuCiudad }}</td>
-            <td>{{ $indicativosciudades->IcIndicativo }}</td>
+                <td>{{ $indicativosciudade->id }}</td>
+            <td>{{ $indicativosciudade->ciudades->CiuCiudad }}</td>
+            <td>{{ $indicativosciudade->IcIndicativo }}</td>
             <td width="120">
-                {!! Form::open(['route' => ['indicativosciudades.destroy', $indicativosciudades->Id], 'method' => 'delete']) !!}
+                {!! Form::open(['route' => ['indicativosciudades.destroy', $indicativosciudade->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
-                    <a href="{{ route('indicativosciudades.show', [$indicativosciudades->Id]) }}"
+                    <a href="{{ route('indicativosciudades.show', [$indicativosciudade->id]) }}"
                        class='btn btn-primary btn-sm mr-1'>
                         <i class="far fa-eye">Ver</i>
                     </a>
-                    <a href="{{ route('indicativosciudades.edit', [$indicativosciudades->Id]) }}"
+                    <a href="{{ route('indicativosciudades.edit', [$indicativosciudade->id]) }}"
                        class='btn btn-success btn-sm mr-1'>
                         <i class="far fa-edit">Editar</i>
                     </a>

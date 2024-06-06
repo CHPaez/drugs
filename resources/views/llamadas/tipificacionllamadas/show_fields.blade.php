@@ -22,10 +22,40 @@
     <p>{{ $tipificacionllamadas->TlDrogueria }}</p>
 </div>
 
-<!-- Tlpersona Field -->
+<!-- Tlpersonacontacto Field -->
 <div class="col-sm-12">
-    {!! Form::label('TlPersona', 'Tlpersona:') !!}
-    <p>{{ $tipificacionllamadas->TlPersona }}</p>
+    {!! Form::label('TlPersonaContacto', 'Tlpersonacontacto:') !!}
+    <p>{{ $tipificacionllamadas->TlPersonaContacto }}</p>
+</div>
+
+<!-- Tltelefonocontacto Field -->
+<div class="col-sm-12">
+    {!! Form::label('TlTelefonoContacto', 'Tltelefonocontacto:') !!}
+    <p>{{ $tipificacionllamadas->TlTelefonoContacto }}</p>
+</div>
+
+<!-- Tlprograma Field -->
+<div class="col-sm-12">
+    {!! Form::label('TlPrograma', 'Tlprograma:') !!}
+    <p>{{ $tipificacionllamadas->TlPrograma }}</p>
+</div>
+
+<!-- Tlcausal Field -->
+<div class="col-sm-12">
+    {!! Form::label('TlCausal', 'Tlcausal:') !!}
+    <p>{{ $tipificacionllamadas->TlCausal }}</p>
+</div>
+
+<!-- Tlestadotipificacion Field -->
+<div class="col-sm-12">
+    {!! Form::label('TlEstadoTipificacion', 'Tlestadotipificacion:') !!}
+    <p>{{ $tipificacionllamadas->TlEstadoTipificacion }}</p>
+</div>
+
+<!-- Tiobservaciones Field -->
+<div class="col-sm-12">
+    {!! Form::label('TIObservaciones', 'Tiobservaciones:') !!}
+    <p>{{ $tipificacionllamadas->TIObservaciones }}</p>
 </div>
 
 <!-- Created At Field -->
