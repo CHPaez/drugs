@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.header')
 
 @section('content')
     <section class="content-header">
@@ -17,7 +17,7 @@
 
         <div class="card">
 
-            {!! Form::model($droguerias, ['route' => ['droguerias.update', $droguerias->id], 'method' => 'patch']) !!}
+            {!! Form::model($droguerias, ['route' => ['droguerias.update', $droguerias->Id], 'method' => 'patch']) !!}
 
             <div class="card-body">
                 <div class="row">
@@ -26,7 +26,7 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                {!! $incluir_botones['actualizar'] !!}
                 <a href="{{ route('droguerias.index') }}" class="btn btn-default">Cancel</a>
             </div>
 

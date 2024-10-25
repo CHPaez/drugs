@@ -25,16 +25,26 @@
         <div class="card">
             <div class="card-body p-0">
                 @include('indicativosciudades.table')
-
-                <div class="card-footer clearfix">
-                    <div class="float-right">
-                        
-                    </div>
-                </div>
             </div>
 
         </div>
     </div>
-
+    @stop
+    @section('js')
+    
+    <script>
+        $("#crear").click(function(){
+            let link = `{{route('indicativosciudades.create')}}`; 
+            document.location.href = link;
+        })
+    
+        $("#indicativosciudades-table #editar").click(function(){
+            let id_tel = $(this).closest('tr').find('td:first-child').text();
+            let link = `{{route('indicativosciudades.edit', ':id')}}`.replace(':id', id_tel);
+            
+            document.location.href = link;
+        });
+    
+    </script>
 @endsection
 

@@ -7,7 +7,8 @@ use App\Http\Requests\UpdatetiposdrogueriasRequest;
 use App\Repositories\tiposdrogueriasRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class tiposdrogueriasController extends AppBaseController
@@ -15,9 +16,31 @@ class tiposdrogueriasController extends AppBaseController
     /** @var tiposdrogueriasRepository $tiposdrogueriasRepository*/
     private $tiposdrogueriasRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(tiposdrogueriasRepository $tiposdrogueriasRepo)
     {
-        $this->tiposdrogueriasRepository = $tiposdrogueriasRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($tiposdrogueriasRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->tiposdrogueriasRepository = $tiposdrogueriasRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -31,8 +54,12 @@ class tiposdrogueriasController extends AppBaseController
     {
         $tiposdroguerias = $this->tiposdrogueriasRepository->all();
 
-        return view('tiposdroguerias.index')
-            ->with('tiposdroguerias', $tiposdroguerias);
+        return view('droguerias.tiposdroguerias.index')
+        ->with([
+            'tiposdroguerias' => $tiposdroguerias,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -42,7 +69,11 @@ class tiposdrogueriasController extends AppBaseController
      */
     public function create()
     {
-        return view('tiposdroguerias.create');
+        return view('droguerias.tiposdroguerias.create')
+        ->with([
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -64,26 +95,6 @@ class tiposdrogueriasController extends AppBaseController
     }
 
     /**
-     * Display the specified tiposdroguerias.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $tiposdroguerias = $this->tiposdrogueriasRepository->find($id);
-
-        if (empty($tiposdroguerias)) {
-            Flash::error('Tiposdroguerias not found');
-
-            return redirect(route('tiposdroguerias.index'));
-        }
-
-        return view('tiposdroguerias.show')->with('tiposdroguerias', $tiposdroguerias);
-    }
-
-    /**
      * Show the form for editing the specified tiposdroguerias.
      *
      * @param int $id
@@ -100,7 +111,12 @@ class tiposdrogueriasController extends AppBaseController
             return redirect(route('tiposdroguerias.index'));
         }
 
-        return view('tiposdroguerias.edit')->with('tiposdroguerias', $tiposdroguerias);
+        return view('droguerias.tiposdroguerias.edit')
+        ->with([
+            'tiposdroguerias' => $tiposdroguerias,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

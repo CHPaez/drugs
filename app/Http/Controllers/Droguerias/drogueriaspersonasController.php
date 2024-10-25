@@ -5,13 +5,16 @@ namespace App\Http\Controllers\Droguerias;
 use App\Models\asociados;
 use App\Models\droguerias;
 use App\Models\personas;
+use App\Models\TiposAsociados;
+use App\Models\EstadosPersonas;
 
 use App\Http\Requests\CreatedrogueriaspersonasRequest;
 use App\Http\Requests\UpdatedrogueriaspersonasRequest;
 use App\Repositories\drogueriaspersonasRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class drogueriaspersonasController extends AppBaseController
@@ -19,9 +22,31 @@ class drogueriaspersonasController extends AppBaseController
     /** @var drogueriaspersonasRepository $drogueriaspersonasRepository*/
     private $drogueriaspersonasRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(drogueriaspersonasRepository $drogueriaspersonasRepo)
     {
-        $this->drogueriaspersonasRepository = $drogueriaspersonasRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($drogueriaspersonasRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->drogueriaspersonasRepository = $drogueriaspersonasRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -34,9 +59,16 @@ class drogueriaspersonasController extends AppBaseController
     public function index(Request $request)
     {
         $drogueriaspersonas = $this->drogueriaspersonasRepository->all();
+        $tiposasociados = tiposasociados::pluck('TaNombre', 'id');
+        
 
-        return view('drogueriaspersonas.index')
-            ->with('drogueriaspersonas', $drogueriaspersonas);
+        return view('droguerias.drogueriaspersonas.index')
+        ->with([
+            'drogueriaspersonas' => $drogueriaspersonas,
+            'tiposasociados' => $tiposasociados,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -51,12 +83,20 @@ class drogueriaspersonasController extends AppBaseController
         $asociados = asociados::pluck('AsCodigo', 'id');
         $droguerias = droguerias::pluck('DrNombre', 'id');
         $personas = personas::pluck('PeNumeroIdentificacion', 'id');
+        $tiposAsociados = TiposAsociados::pluck('TaNombre', 'id');
+        $estadospersonas = EstadosPersonas::pluck('EsEstado', 'id');
 
 
-        return view('drogueriaspersonas.create')
-        ->with('asociados', $asociados)
-        ->with('droguerias', $droguerias)
-        ->with('personas', $personas);
+        return view('droguerias.drogueriaspersonas.create')
+        ->with([
+            'asociados' => $asociados,
+            'droguerias' => $droguerias,
+            'personas' => $personas,
+            'tiposAsociados' => $tiposAsociados,
+            'estadospersonas' => $estadospersonas,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -78,26 +118,6 @@ class drogueriaspersonasController extends AppBaseController
     }
 
     /**
-     * Display the specified drogueriaspersonas.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $drogueriaspersonas = $this->drogueriaspersonasRepository->find($id);
-
-        if (empty($drogueriaspersonas)) {
-            Flash::error('Drogueriaspersonas not found');
-
-            return redirect(route('drogueriaspersonas.index'));
-        }
-
-        return view('drogueriaspersonas.show')->with('drogueriaspersonas', $drogueriaspersonas);
-    }
-
-    /**
      * Show the form for editing the specified drogueriaspersonas.
      *
      * @param int $id
@@ -106,7 +126,13 @@ class drogueriaspersonasController extends AppBaseController
      */
     public function edit($id)
     {
+
         $drogueriaspersonas = $this->drogueriaspersonasRepository->find($id);
+        $asociados = asociados::pluck('AsCodigo', 'id');
+        $droguerias = droguerias::pluck('DrNombre', 'id');
+        $personas = personas::pluck('PeNumeroIdentificacion', 'id');
+        $tiposAsociados = TiposAsociados::pluck('TaNombre','id');
+        $estadospersonas = EstadosPersonas::pluck('EsEstado', 'id');
 
         if (empty($drogueriaspersonas)) {
             Flash::error('Drogueriaspersonas not found');
@@ -114,7 +140,18 @@ class drogueriaspersonasController extends AppBaseController
             return redirect(route('drogueriaspersonas.index'));
         }
 
-        return view('drogueriaspersonas.edit')->with('drogueriaspersonas', $drogueriaspersonas);
+        return view('droguerias.drogueriaspersonas.edit')
+        ->with([
+            'drogueriaspersonas' => $drogueriaspersonas,
+            'asociados' => $asociados,
+            'droguerias' => $droguerias,
+            'personas' => $personas,
+            'droguerias' => $droguerias,
+            'tiposAsociados' => $tiposAsociados,
+            'estadospersonas' => $estadospersonas,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

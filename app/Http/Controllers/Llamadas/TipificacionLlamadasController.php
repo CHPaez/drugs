@@ -1,6 +1,8 @@
 <?php
+ 
+ namespace App\Http\Controllers\Llamadas;
 
-namespace App\Http\Controllers\Llamadas;
+
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\drogueriaspersonas; 
@@ -8,13 +10,15 @@ use App\Models\Asociados;
 use App\Models\personas;
 use App\Models\droguerias;
 use App\Models\telefonopersonas;
+use App\Models\programas;
+use App\Models\user;
 
 use App\Http\Requests\CreatetipificacionllamadasRequest;
 use App\Http\Requests\UpdatetipificacionllamadasRequest;
 use App\Repositories\tipificacionllamadasRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
 use Response;
 
 class tipificacionllamadasController extends AppBaseController
@@ -22,9 +26,31 @@ class tipificacionllamadasController extends AppBaseController
     /** @var tipificacionllamadasRepository $tipificacionllamadasRepository*/
     private $tipificacionllamadasRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','c_tipificacion','c_tipificacion'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(tipificacionllamadasRepository $tipificacionllamadasRepo)
     {
-        $this->tipificacionllamadasRepository = $tipificacionllamadasRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($tipificacionllamadasRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->tipificacionllamadasRepository = $tipificacionllamadasRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -34,13 +60,16 @@ class tipificacionllamadasController extends AppBaseController
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $tipificacionllamadas = $this->tipificacionllamadasRepository->all();
 
-        return view('tipificacionllamadas.index')
-        
-            ->with('tipificacionllamadas', $tipificacionllamadas);
+        return view('llamadas.tipificacionllamadas.index')
+            ->with([
+                'tipificacionllamadas' => $tipificacionllamadas,
+                'incluir_botones' => $this->incluir_botones,
+                'menu' => $this->menu,
+            ]);
     }
 
     /**
@@ -48,14 +77,18 @@ class tipificacionllamadasController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
+  public function create()
     {
-        // Obtener el nombre del usuario de la sesi�n actual
-         $userId =  Auth::id();
+        // Obtener la lista de todos los usuarios para el select
+        $users = User::pluck('name', 'id');
+
+        // Obtener el usuario autenticado
+         $authenticatedUser = Auth::user();
          $drogueriaspersonas = drogueriaspersonas::all()->toArray();
          $personas = personas::all()->toArray();
          $droguerias = droguerias::all()->toArray();
          $telefonopersonas = telefonopersonas::all()->toArray();
+         $programas = programas::all()->pluck('PrNombre', 'id');
 
          $personasJson = json_encode($personas);
          $drogueriasJson  = json_encode($droguerias);
@@ -63,18 +96,25 @@ class tipificacionllamadasController extends AppBaseController
          //dd($telefonopersonasJson);
         
          $asociados = asociados::all()->pluck('AsCodigo', 'id');
-         
+          
+        $data_vista = [
+            'users'=> $users,
+            'authenticatedUser'=> $authenticatedUser,
+            'asociados'=> $asociados,
+            'drogueriaspersonas' => $drogueriaspersonas,
+            'personas'=> $personas,
+            'droguerias'=> $droguerias,
+            'telefonopersonas'=> $telefonopersonas,
+            'programas'=> $programas,
+            'personasJson'=> $personasJson,
+            'drogueriasJson'=> $drogueriasJson,
+            'telefonopersonasJson'=> $telefonopersonasJson,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ];
 
-        return view('tipificacionllamadas.create')
-        ->with('userId', $userId)
-        ->with('asociados', $asociados)
-        ->with('drogueriaspersonas', $drogueriaspersonas)
-        ->with('personas', $personas)
-        ->with('droguerias', $droguerias)
-        ->with('telefonopersonas', $telefonopersonas)
-        ->with('personasJson', $personasJson)
-        ->with('drogueriasJson', $drogueriasJson)
-        ->with('telefonopersonasJson', $telefonopersonasJson);
+        return view('llamadas.tipificacionllamadas.create')
+        ->with($data_vista);
     }
 
     /**
@@ -88,31 +128,11 @@ class tipificacionllamadasController extends AppBaseController
     {
         $input = $request->all();
 
-        $tipificacionllamadas = $this->tipificacionllamadasRepository->create($input);
+        $this->tipificacionllamadasRepository->create($input);
 
         Flash::success('Tipificacionllamadas saved successfully.');
 
         return redirect(route('tipificacionllamadas.index'));
-    }
-
-    /**
-     * Display the specified tipificacionllamadas.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $tipificacionllamadas = $this->tipificacionllamadasRepository->find($id);
-
-        if (empty($tipificacionllamadas)) {
-            Flash::error('Tipificacionllamadas not found');
-
-            return redirect(route('tipificacionllamadas.index'));
-        }
-
-        return view('tipificacionllamadas.show')->with('tipificacionllamadas', $tipificacionllamadas);
     }
 
     /**
@@ -132,7 +152,11 @@ class tipificacionllamadasController extends AppBaseController
             return redirect(route('tipificacionllamadas.index'));
         }
 
-        return view('tipificacionllamadas.edit')->with('tipificacionllamadas', $tipificacionllamadas);
+        return view('llamadas.tipificacionllamadas.edit')->with([
+            'tipificacionllamadas' => $tipificacionllamadas,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

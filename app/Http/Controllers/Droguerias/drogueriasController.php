@@ -11,7 +11,8 @@ use App\Http\Requests\UpdatedrogueriasRequest;
 use App\Repositories\drogueriasRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class drogueriasController extends AppBaseController
@@ -19,9 +20,31 @@ class drogueriasController extends AppBaseController
     /** @var drogueriasRepository $drogueriasRepository*/
     private $drogueriasRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(drogueriasRepository $drogueriasRepo)
     {
-        $this->drogueriasRepository = $drogueriasRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($drogueriasRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->drogueriasRepository = $drogueriasRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -36,7 +59,11 @@ class drogueriasController extends AppBaseController
         $droguerias = $this->drogueriasRepository->all();
 
         return view('droguerias.index')
-            ->with('droguerias', $droguerias);
+        ->with([
+            'droguerias' => $droguerias,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -52,9 +79,13 @@ class drogueriasController extends AppBaseController
         $ciudades = ciudades::pluck('CiuCiudad', 'id');
 
         return view('droguerias.create')
-        ->with('tiposdroguerias', $tiposdroguerias)
-        ->with('tiposidentificaciones', $tiposidentificaciones)
-        ->with('ciudades', $ciudades);
+        ->with([
+            'tiposdroguerias' => $tiposdroguerias,
+            'tiposidentificaciones' => $tiposidentificaciones,
+            'ciudades' => $ciudades,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -75,25 +106,6 @@ class drogueriasController extends AppBaseController
         return redirect(route('droguerias.index'));
     }
 
-    /**
-     * Display the specified droguerias.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $droguerias = $this->drogueriasRepository->find($id);
-
-        if (empty($droguerias)) {
-            Flash::error('Droguerias not found');
-
-            return redirect(route('droguerias.index'));
-        }
-
-        return view('droguerias.show')->with('droguerias', $droguerias);
-    }
 
     /**
      * Show the form for editing the specified droguerias.
@@ -104,7 +116,11 @@ class drogueriasController extends AppBaseController
      */
     public function edit($id)
     {
+
         $droguerias = $this->drogueriasRepository->find($id);
+        $tiposdroguerias = tiposdroguerias::pluck('TdNombre', 'id');
+        $tiposidentificaciones = tiposidentificaciones::pluck('TiNombre', 'id');
+        $ciudades = ciudades::pluck('CiuCiudad', 'id');
 
         if (empty($droguerias)) {
             Flash::error('Droguerias not found');
@@ -112,7 +128,15 @@ class drogueriasController extends AppBaseController
             return redirect(route('droguerias.index'));
         }
 
-        return view('droguerias.edit')->with('droguerias', $droguerias);
+        return view('droguerias.edit')
+        ->with([
+            'droguerias' => $droguerias,
+            'tiposdroguerias' => $tiposdroguerias,
+            'tiposidentificaciones' => $tiposidentificaciones,
+            'ciudades' => $ciudades,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);   
     }
 
     /**

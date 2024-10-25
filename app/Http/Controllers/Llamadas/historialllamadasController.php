@@ -9,7 +9,7 @@ use App\Http\Requests\UpdatehistorialllamadasRequest;
 use App\Repositories\historialllamadasRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
 use Response;
 
 class historialllamadasController extends AppBaseController
@@ -17,9 +17,31 @@ class historialllamadasController extends AppBaseController
     /** @var historialllamadasRepository $historialllamadasRepository*/
     private $historialllamadasRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(historialllamadasRepository $historialllamadasRepo)
     {
-        $this->historialllamadasRepository = $historialllamadasRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($historialllamadasRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->historialllamadasRepository = $historialllamadasRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -34,7 +56,11 @@ class historialllamadasController extends AppBaseController
         $historialllamadas = $this->historialllamadasRepository->all();
 
         return view('historialllamadas.index')
-            ->with('historialllamadas', $historialllamadas);
+        ->with([
+            'historialllamadas' => $historialllamadas,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -46,10 +72,14 @@ class historialllamadasController extends AppBaseController
     {
 
         // Obtener el nombre del usuario de la sesi�n actual
-    $userId =  Auth::id();
+        $userId =  Auth::id();
 
         return view('historialllamadas.create')
-        ->with('userId', $userId);
+        ->with([
+            'userId' => $userId,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -71,26 +101,6 @@ class historialllamadasController extends AppBaseController
     }
 
     /**
-     * Display the specified historialllamadas.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $historialllamadas = $this->historialllamadasRepository->find($id);
-
-        if (empty($historialllamadas)) {
-            Flash::error('Historialllamadas not found');
-
-            return redirect(route('historialllamadas.index'));
-        }
-
-        return view('historialllamadas.show')->with('historialllamadas', $historialllamadas);
-    }
-
-    /**
      * Show the form for editing the specified historialllamadas.
      *
      * @param int $id
@@ -107,7 +117,12 @@ class historialllamadasController extends AppBaseController
             return redirect(route('historialllamadas.index'));
         }
 
-        return view('historialllamadas.edit')->with('historialllamadas', $historialllamadas);
+        return view('historialllamadas.edit')
+        ->with([
+            'historialllamadas' => $historialllamadas,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

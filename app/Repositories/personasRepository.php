@@ -8,7 +8,7 @@ use App\Repositories\BaseRepository;
 /**
  * Class personasRepository
  * @package App\Repositories
- * @version March 27, 2024, 6:52 pm UTC
+ * @version May 21, 2024, 6:23 am UTC
 */
 
 class personasRepository extends BaseRepository
@@ -18,7 +18,6 @@ class personasRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'Id',
-        'PeTipoAsociado',
         'PeTipoIdentificacion',
         'PeNumeroIdentificacion',
         'PeGenero',

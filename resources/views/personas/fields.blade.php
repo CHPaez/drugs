@@ -1,15 +1,3 @@
-<!-- Petipoasociado Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('PeTipoAsociado', 'Tipo Asociado:') !!}
-    {!! Form::select('PeTipoAsociado',$tiposAsociados ,null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Petipoasociado Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('PeEstadoPersona', 'Tipo Estado:') !!}
-    {!! Form::select('PeEstadoPersona',$estadospersonas ,null, ['class' => 'form-control']) !!}
-</div>
-
 <!-- Petipoidentificacion Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('PeTipoIdentificacion', 'Tipo de identificacion:') !!}
@@ -45,5 +33,4 @@
     {!! Form::label('PeCorreo', 'Correo:') !!}
     {!! Form::email('PeCorreo', null, ['class' => 'form-control']) !!}
 </div>
-
 

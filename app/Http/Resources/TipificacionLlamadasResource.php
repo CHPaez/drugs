@@ -20,7 +20,13 @@ class tipificacionllamadasResource extends JsonResource
             'TlUser' => $this->TlUser,
             'TlCodigoAsociado' => $this->TlCodigoAsociado,
             'TlDrogueria' => $this->TlDrogueria,
-            'TlPersona' => $this->TlPersona,
+            'TlPersonaContacto' => $this->TlPersonaContacto,
+            'TlTelefonoContacto' => $this->TlTelefonoContacto,
+            'TlTelefonoWhatsapp' => $this->TlTelefonoWhatsapp,
+            'TlPrograma' => $this->TlPrograma,
+            'TlCausal' => $this->TlCausal,
+            'TlEstadoTipificacion' => $this->TlEstadoTipificacion,
+            'TIObservaciones' => $this->TIObservaciones,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];

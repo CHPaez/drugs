@@ -9,7 +9,8 @@ use App\Http\Requests\UpdateciudadesRequest;
 use App\Repositories\ciudadesRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class ciudadesController extends AppBaseController
@@ -17,9 +18,31 @@ class ciudadesController extends AppBaseController
     /** @var ciudadesRepository $ciudadesRepository*/
     private $ciudadesRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(ciudadesRepository $ciudadesRepo)
     {
-        $this->ciudadesRepository = $ciudadesRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($ciudadesRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->ciudadesRepository = $ciudadesRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -33,8 +56,12 @@ class ciudadesController extends AppBaseController
     {
         $ciudades = $this->ciudadesRepository->all();
 
-        return view('ciudades.index')
-            ->with('ciudades', $ciudades);
+        return view('paises.ciudades.index')
+        ->with([
+            'ciudades' => $ciudades,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -46,8 +73,12 @@ class ciudadesController extends AppBaseController
     {
         $departamentos = departamentos::pluck('DepDepartamento', 'id');
 
-        return view('ciudades.create')
-        ->with('departamentos', $departamentos);
+        return view('paises.ciudades.create')
+        ->with([
+            'departamentos' => $departamentos,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -69,26 +100,6 @@ class ciudadesController extends AppBaseController
     }
 
     /**
-     * Display the specified ciudades.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $ciudades = $this->ciudadesRepository->find($id);
-
-        if (empty($ciudades)) {
-            Flash::error('Ciudades not found');
-
-            return redirect(route('ciudades.index'));
-        }
-
-        return view('ciudades.show')->with('ciudades', $ciudades);
-    }
-
-    /**
      * Show the form for editing the specified ciudades.
      *
      * @param int $id
@@ -97,7 +108,9 @@ class ciudadesController extends AppBaseController
      */
     public function edit($id)
     {
+
         $ciudades = $this->ciudadesRepository->find($id);
+        $departamentos = departamentos::pluck('DepDepartamento','id');
 
         if (empty($ciudades)) {
             Flash::error('Ciudades not found');
@@ -105,7 +118,13 @@ class ciudadesController extends AppBaseController
             return redirect(route('ciudades.index'));
         }
 
-        return view('ciudades.edit')->with('ciudades', $ciudades);
+        return view('paises.ciudades.edit')
+        ->with([
+            'ciudades' => $ciudades,
+            'departamentos' =>$departamentos,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

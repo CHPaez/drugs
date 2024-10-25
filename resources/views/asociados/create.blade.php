@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.header')
 
 @section('content')
     <section class="content-header">
@@ -28,7 +28,7 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                {!! $incluir_botones['guardar'] !!}
                 <a href="{{ route('asociados.index') }}" class="btn btn-default">Cancel</a>
             </div>
 

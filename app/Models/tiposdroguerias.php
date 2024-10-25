@@ -18,6 +18,8 @@ class tiposdroguerias extends Model
 {
 
 
+    public $primaryKey = "Id";
+    
     public $table = 'tiposdroguerias';
     
 

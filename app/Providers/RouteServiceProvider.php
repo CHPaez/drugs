@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Route as RoutingRoute;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -17,7 +18,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/';
 
     /**
      * The controller namespace for the application.
@@ -35,22 +36,33 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->configureRateLimiting();
+        parent::boot();
 
-        $this->routes(function () {
-            Route::prefix('api')
-                ->middleware('api')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/api.php'));
+    // Macro para definir los modulos desde el enrutador (web.php)
+    Route::macro('module', function ($module, $callback) {
+        $prefix = $module;
+        Route::group(['module' => $module], $callback);
+    });
 
-            Route::middleware('web')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/web.php'));
+     // Macro para definir los submodulos desde el enrutador (web.php)
+    Route::macro('submodule', function ($submodule, $callback) {
+        $prefix = strtolower(str_replace(' ', '-', $submodule));
+        Route::group(['submodule' => $submodule], $callback);
+    });
+
+    //Limita la cantidad de solicitudes permitidas para el usuario
+    $this->configureRateLimiting();
+
+    //Carga las rutas dentro del middleware 
+    $this->routes(function () {
+        Route::middleware('web')
+           ->namespace($this->namespace)
+           ->group(base_path('routes/web.php'));
         });
     }
 
     /**
-     * Configure the rate limiters for the application.
+     * Configura la cantidad de solicitudes permitidas para la ruta registrada
      *
      * @return void
      */

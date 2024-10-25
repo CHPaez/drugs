@@ -3,38 +3,40 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Droguerias</h1>
-                </div>
-                <div class="col-sm-6">
-                    <a class="btn btn-primary float-right"
-                       href="{{ route('droguerias.create') }}">
-                        Add New
-                    </a>
-                </div>
+                <div class="col-sm-4">
+                    <h3>Droguerias</h3>
+                    {!! $incluir_botones['crear'] !!}
+                </div>  
             </div>
         </div>
     </section>
-
+<br>
     <div class="content px-3">
 
         @include('flash::message')
 
         <div class="clearfix"></div>
 
-        <div class="card">
-            <div class="card-body p-0">
                 @include('droguerias.table')
-
-                <div class="card-footer clearfix">
-                    <div class="float-right">
-                        
-                    </div>
-                </div>
-            </div>
 
         </div>
     </div>
-
+    @stop
+    @section('js')
+    
+    <script>
+        $("#crear").click(function(){
+            let link = `{{route('droguerias.create')}}`; 
+            document.location.href = link;
+        })
+    
+        $("#droguerias-table #editar").click(function(){
+            let id_tel = $(this).closest('tr').find('td:first-child').text();
+            let link = `{{route('droguerias.edit', ':id')}}`.replace(':id', id_tel);
+            
+            document.location.href = link;
+        });
+    
+    </script>
 @endsection
 

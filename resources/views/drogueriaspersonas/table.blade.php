@@ -17,7 +17,8 @@
             <td>{{ $drogueriaspersona->DpDrogueria }}</td>
             <td>{{ $drogueriaspersona->DpPersona }}</td>
                 <td width="120">
-                    
+                    {!! $incluir_botones['editar'] !!}
+                    {!! $incluir_botones['eliminar'] !!}
                 </td>
             </tr>
         @endforeach

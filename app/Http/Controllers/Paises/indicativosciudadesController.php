@@ -9,7 +9,8 @@ use App\Http\Requests\UpdateindicativosciudadesRequest;
 use App\Repositories\indicativosciudadesRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Illuminate\Support\Facades\Auth;
+use Laracasts\Flash\Flash;
 use Response;
 
 class indicativosciudadesController extends AppBaseController
@@ -17,9 +18,31 @@ class indicativosciudadesController extends AppBaseController
     /** @var indicativosciudadesRepository $indicativosciudadesRepository*/
     private $indicativosciudadesRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(indicativosciudadesRepository $indicativosciudadesRepo)
     {
-        $this->indicativosciudadesRepository = $indicativosciudadesRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($indicativosciudadesRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->indicativosciudadesRepository = $indicativosciudadesRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -34,9 +57,13 @@ class indicativosciudadesController extends AppBaseController
         $indicativosciudades = $this->indicativosciudadesRepository->all();
         $ciudades = ciudades::pluck('CiuCiudad', 'id');
 
-        return view('indicativosciudades.index')
-            ->with('indicativosciudades', $indicativosciudades)
-            ->with('ciudades', $ciudades);
+        return view('paises.indicativosciudades.index')
+        ->with([
+            'indicativosciudades' => $indicativosciudades,
+            'ciudades' =>  $ciudades,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -47,8 +74,12 @@ class indicativosciudadesController extends AppBaseController
     public function create()
     {
         $ciudades = ciudades::pluck('CiuCiudad', 'id');
-        return view('indicativosciudades.create')
-        ->with('ciudades', $ciudades);
+        return view('paises.indicativosciudades.create')
+        ->with([
+            'ciudades' => $ciudades,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -70,26 +101,6 @@ class indicativosciudadesController extends AppBaseController
     }
 
     /**
-     * Display the specified indicativosciudades.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $indicativosciudades = $this->indicativosciudadesRepository->find($id);
-
-        if (empty($indicativosciudades)) {
-            Flash::error('Indicativosciudades not found');
-
-            return redirect(route('indicativosciudades.index'));
-        }
-
-        return view('indicativosciudades.show')->with('indicativosciudades', $indicativosciudades);
-    }
-
-    /**
      * Show the form for editing the specified indicativosciudades.
      *
      * @param int $id
@@ -106,7 +117,12 @@ class indicativosciudadesController extends AppBaseController
             return redirect(route('indicativosciudades.index'));
         }
 
-        return view('indicativosciudades.edit')->with('indicativosciudades', $indicativosciudades);
+        return view('paises.indicativosciudades.edit')
+        ->with([
+            'indicativosciudades' => $indicativosciudades,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

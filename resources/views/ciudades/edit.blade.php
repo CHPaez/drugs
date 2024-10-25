@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Edit Ciudades</h1>
+                    <h4>Edit Ciudades</h4>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                {!! $incluir_botones['actualizar'] !!}
                 <a href="{{ route('ciudades.index') }}" class="btn btn-default">Cancel</a>
             </div>
 

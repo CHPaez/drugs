@@ -3,13 +3,13 @@
         <thead>
         <tr>
             <th>Id</th>
-        <th>Drtipodrogueria</th>
-        <th>Drcodigo</th>
-        <th>Drnombre</th>
-        <th>Drtipoidentificacion</th>
-        <th>Dridentificacion</th>
-        <th>Drciudad</th>
-        <th>Drdireccion</th>
+        <th>Tipo Drogueria</th>
+        <th>Codigo Drogueria</th>
+        <th>Nombre</th>
+        <th>Tipo Identificacion</th>
+        <th>Numero Indetificacion</th>
+        <th>Ciudad</th>
+        <th>Direccion</th>
             <th colspan="3">Action</th>
         </tr>
         </thead>
@@ -17,16 +17,21 @@
         @foreach($droguerias as $drogueria)
             <tr>
                 <td>{{ $drogueria->Id }}</td>
-            <td>{{ $drogueria->DrTipoDrogueria }}</td>
+            <td>{{ $drogueria->tiposdroguerias->TdNombre }}</td>
             <td>{{ $drogueria->DrCodigo }}</td>
             <td>{{ $drogueria->DrNombre }}</td>
-            <td>{{ $drogueria->DrTipoIdentificacion }}</td>
+            <td>{{ $drogueria->TiposIdentificaciones->TiNombre }}</td>
             <td>{{ $drogueria->DrIdentificacion }}</td>
-            <td>{{ $drogueria->DrCiudad }}</td>
+            <td>{{ $drogueria->Ciudades->CiuCiudad }}</td>
             <td>{{ $drogueria->DrDireccion }}</td>
-                <td width="120">
-                    
-                </td>
+            <td width="120">
+                {!! Form::open(['route' => ['droguerias.destroy', $drogueria->Id], 'method' => 'delete']) !!}
+                <div class='btn-group'>
+                    {!! $incluir_botones['editar'] !!}
+                    {!! $incluir_botones['eliminar'] !!}
+                </div>
+                {!! Form::close() !!}
+            </td>
             </tr>
         @endforeach
         </tbody>

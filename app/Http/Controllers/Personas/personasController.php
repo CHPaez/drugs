@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Personas;
 
 use App\Models\Genero;
-use App\Models\TiposAsociados;
 use App\Models\TiposIdentificaciones;
-use App\Models\EstadosPersonas; 
+
 
 use App\Http\Requests\CreatepersonasRequest;
 use App\Http\Requests\UpdatepersonasRequest;
 use App\Repositories\personasRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class personasController extends AppBaseController
@@ -20,9 +20,31 @@ class personasController extends AppBaseController
     /** @var personasRepository $personasRepository*/
     private $personasRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(personasRepository $personasRepo)
     {
-        $this->personasRepository = $personasRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($personasRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->personasRepository = $personasRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -37,13 +59,12 @@ class personasController extends AppBaseController
         $personas = $this->personasRepository->all();
         // Obtener solo los c�digos de asociados como clave y valor
       
-        $estadospersonas = EstadosPersonas::pluck('EsEstado', 'id');
-        $tiposasociados = tiposasociados::pluck('TaNombre', 'id');
-    
         return view('personas.index')
-            ->with('personas', $personas)
-            ->with('estadospersonas', $estadospersonas)
-            ->with('tiposasociados', $tiposasociados); 
+            ->with([
+                'personas' => $personas,
+                'incluir_botones' => $this->incluir_botones,
+                'menu' => $this->menu,
+            ]); 
     }
     
 
@@ -57,13 +78,16 @@ class personasController extends AppBaseController
 {
      // Obtener solo los nombres de los g�neros
      $generos = Genero::pluck('genombre', 'id');
-     $tiposAsociados = TiposAsociados::pluck('TaNombre', 'id');
      $tiposIdentificaciones = tiposIdentificaciones::pluck('TiNombre', 'id');
-     $estadospersonas = EstadosPersonas::pluck('EsEstado', 'id');
+    
 
-   
-
-    return view('personas.create', compact('generos', 'tiposAsociados', 'tiposIdentificaciones','estadospersonas'));
+    return view('personas.create')
+    ->with([
+        'generos' => $generos,
+        'tiposIdentificaciones' => $tiposIdentificaciones,
+        'incluir_botones' => $this->incluir_botones,
+        'menu' => $this->menu,
+    ]);
 }
     /**
      * Store a newly created personas in storage.
@@ -83,25 +107,6 @@ class personasController extends AppBaseController
         return redirect(route('personas.index'));
     }
 
-    /**
-     * Display the specified personas.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $personas = $this->personasRepository->find($id);
-
-        if (empty($personas)) {
-            Flash::error('Personas not found');
-
-            return redirect(route('personas.index'));
-        }
-
-        return view('personas.show')->with('personas', $personas);
-    }
 
     /**
      * Show the form for editing the specified personas.
@@ -120,12 +125,18 @@ class personasController extends AppBaseController
     }
 
     // Obtener datos adicionales necesarios para la vista
-    $generos = genero::all();
-    $tiposAsociados = TiposAsociados::all();
-    $tiposIdentificaciones = TiposIdentificaciones::all();
-    $estadospersonas = EstadosPersonas::pluck('EsEstado', 'id');
+    $generos = genero::pluck('GeNombre','id');
+    $tiposIdentificaciones = TiposIdentificaciones::pluck('TiNombre','id');
+    
 
-    return view('personas.edit', compact('persona', 'generos', 'tiposAsociados', 'tiposIdentificaciones', 'estadospersonas'));
+    return view('personas.edit')
+    ->with([
+        'tiposIdentificaciones' => $tiposIdentificaciones,
+        'persona' => $persona,
+        'generos' => $generos,
+        'incluir_botones' => $this->incluir_botones,
+        'menu' => $this->menu,
+    ]);
 }
 
 

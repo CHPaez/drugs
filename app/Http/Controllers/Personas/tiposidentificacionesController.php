@@ -7,7 +7,8 @@ use App\Http\Requests\UpdatetiposidentificacionesRequest;
 use App\Repositories\tiposidentificacionesRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class tiposidentificacionesController extends AppBaseController
@@ -15,9 +16,31 @@ class tiposidentificacionesController extends AppBaseController
     /** @var tiposidentificacionesRepository $tiposidentificacionesRepository*/
     private $tiposidentificacionesRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(tiposidentificacionesRepository $tiposidentificacionesRepo)
     {
-        $this->tiposidentificacionesRepository = $tiposidentificacionesRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($tiposidentificacionesRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->tiposidentificacionesRepository = $tiposidentificacionesRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -31,8 +54,12 @@ class tiposidentificacionesController extends AppBaseController
     {
         $tiposidentificaciones = $this->tiposidentificacionesRepository->all();
 
-        return view('tiposidentificaciones.index')
-            ->with('tiposidentificaciones', $tiposidentificaciones);
+        return view('personas.tiposidentificaciones.index')
+            ->with([
+                'tiposidentificaciones' => $tiposidentificaciones,
+                'incluir_botones' => $this->incluir_botones,
+                'menu' => $this->menu,
+            ]);
     }
 
     /**
@@ -42,7 +69,11 @@ class tiposidentificacionesController extends AppBaseController
      */
     public function create()
     {
-        return view('tiposidentificaciones.create');
+        return view('personas.tiposidentificaciones.create')
+        ->with([
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -64,26 +95,6 @@ class tiposidentificacionesController extends AppBaseController
     }
 
     /**
-     * Display the specified tiposidentificaciones.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $tiposidentificaciones = $this->tiposidentificacionesRepository->find($id);
-
-        if (empty($tiposidentificaciones)) {
-            Flash::error('Tiposidentificaciones not found');
-
-            return redirect(route('tiposidentificaciones.index'));
-        }
-
-        return view('tiposidentificaciones.show')->with('tiposidentificaciones', $tiposidentificaciones);
-    }
-
-    /**
      * Show the form for editing the specified tiposidentificaciones.
      *
      * @param int $id
@@ -100,7 +111,12 @@ class tiposidentificacionesController extends AppBaseController
             return redirect(route('tiposidentificaciones.index'));
         }
 
-        return view('tiposidentificaciones.edit')->with('tiposidentificaciones', $tiposidentificaciones);
+        return view('personas.tiposidentificaciones.edit')
+        ->with([
+            'tiposidentificaciones' => $tiposidentificaciones,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

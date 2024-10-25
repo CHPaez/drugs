@@ -19,6 +19,8 @@ class ciudades extends Model
 {
 
 
+
+
     public $table = 'ciudades';
     
 
