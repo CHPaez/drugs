@@ -31,13 +31,13 @@
 <!-- Tltelefonocontacto Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('TlTelefonoContacto', 'Telefono de Contacto:') !!}
-    {!! Form::number('TlTelefonoContacto', null, ['class' => 'form-control']) !!}
+    {!! Form::select('TlTelefonoContacto', ['' => ''] + \App\Models\telefonopersonas::pluck('TeTelefono', 'id')->toArray(), null, ['class' => 'form-control', 'id' => 'TlTelefono']) !!}
 </div>
 
 <!-- Tltelefonowhatsapp Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('TlTelefonoWhatsapp', 'Tltelefonowhatsapp:') !!}
-    {!! Form::number('TlTelefonoWhatsapp', null, ['class' => 'form-control']) !!}
+    {!! Form::select('TlTelefonoWhatsapp', ['' => ''] + \App\Models\telefonopersonas::pluck('TeTelefono', 'id')->toArray(), null, ['class' => 'form-control', 'id' => 'TlTelefonoWhatsapp']) !!}
 </div>
 
 <!-- Tlprograma Field -->

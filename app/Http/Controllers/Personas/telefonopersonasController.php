@@ -75,7 +75,7 @@ class telefonopersonasController extends AppBaseController
 
         Flash::success('Telefonopersonas saved successfully.');
 
-        return redirect(route('personas.telefonopersonas.index'));
+        return redirect(route('telefonopersonas.index'));
     }
 
     /**
