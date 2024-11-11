@@ -23,8 +23,8 @@
 
 <!-- Tlpersonacontacto Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('TlPersona', 'Persona:') !!}
-    {!! Form::select('TlPersona', ['' => ''] + \App\Models\Personas::pluck('PeNombre', 'id')->toArray(), null, ['class' => 'form-control', 'id' => 'TlPersona']) !!}
+    {!! Form::label('TlPersonaContacto', 'Persona:') !!}
+    {!! Form::select('TlPersonaContacto', ['' => ''] + \App\Models\Personas::pluck('PeNombre', 'id')->toArray(), null, ['class' => 'form-control', 'id' => 'TlPersona']) !!}
 </div>
 
 
@@ -43,7 +43,7 @@
 <!-- Tlprograma Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('TlPrograma', 'Programa:') !!}
-    {!! Form::select('TlPrograma',$programas, null, ['class' => 'form-control']) !!}
+    {!! Form::select('TlPrograma', ['' => ''] + \App\Models\Programas::pluck('PrNombre', 'id')->toArray(), null, ['class' => 'form-control', 'id' => 'TlPrograma']) !!}
 </div>
 
 <!-- Tlestadotipificacion Field -->
