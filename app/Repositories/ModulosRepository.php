@@ -18,7 +18,7 @@ class ModulosRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'id',
-        'Name'
+        'MoNombre'
     ];
 
     /**

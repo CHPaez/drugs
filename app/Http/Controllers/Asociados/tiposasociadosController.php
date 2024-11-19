@@ -6,8 +6,9 @@ use App\Http\Requests\CreatetiposasociadosRequest;
 use App\Http\Requests\UpdatetiposasociadosRequest;
 use App\Repositories\tiposasociadosRepository;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
 use Response;
 
 class tiposasociadosController extends AppBaseController
@@ -15,9 +16,32 @@ class tiposasociadosController extends AppBaseController
     /** @var tiposasociadosRepository $tiposasociadosRepository*/
     private $tiposasociadosRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','c_tiposasociados','c_tiposasociados'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(tiposasociadosRepository $tiposasociadosRepo)
     {
-        $this->tiposasociadosRepository = $tiposasociadosRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($tiposasociadosRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->tiposasociadosRepository = $tiposasociadosRepo;
+
+            return $next($request);
+        });
+
     }
 
     /**
@@ -27,12 +51,16 @@ class tiposasociadosController extends AppBaseController
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $tiposasociados = $this->tiposasociadosRepository->all();
 
         return view('asociados.tiposasociados.index')
-            ->with('tiposasociados', $tiposasociados);
+            ->with([
+                'tiposasociados' => $tiposasociados,
+                'incluir_botones' => $this->incluir_botones,
+                'menu' => $this->menu,
+            ]);
     }
 
     /**
@@ -42,7 +70,10 @@ class tiposasociadosController extends AppBaseController
      */
     public function create()
     {
-        return view('asociados.tiposasociados.create');
+        return view('asociados.tiposasociados.create')->with([
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -63,25 +94,6 @@ class tiposasociadosController extends AppBaseController
         return redirect(route('tiposasociados.index'));
     }
 
-    /**
-     * Display the specified tiposasociados.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $tiposasociados = $this->tiposasociadosRepository->find($id);
-
-        if (empty($tiposasociados)) {
-            Flash::error('Tiposasociados not found');
-
-            return redirect(route('tiposasociados'));
-        }
-
-        return view('asociados.tiposasociados.show')->with('tiposasociados', $tiposasociados);
-    }
 
     /**
      * Show the form for editing the specified tiposasociados.
@@ -100,7 +112,11 @@ class tiposasociadosController extends AppBaseController
             return redirect(route('tiposasociados.index'));
         }
 
-        return view('asociados.tiposasociados.edit')->with('tiposasociados', $tiposasociados);
+        return view('asociados.tiposasociados.edit')->with([
+            'tiposasociados' => $tiposasociados,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

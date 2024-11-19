@@ -3,14 +3,9 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Relacion Drogueria</h1>
-                </div>
-                <div class="col-sm-6">
-                    <a class="btn btn-primary float-right"
-                       href="{{ route('tiposasociados.create') }}">
-                        Add New
-                    </a>
+                <div class="col-sm-6 d-flex">
+                    <h4>Relacion Drogueria</h4>
+                    {!! $incluir_botones['crear'] !!}
                 </div>
             </div>
         </div>
@@ -27,5 +22,23 @@
 
 
     </div>
+
+    @stop
+    @section('js')
+
+    <script>
+        $("#c_tiposasociados").click(function(){
+            let link = `{{route('tiposasociados.create')}}`; 
+            document.location.href = link;
+        })
+
+        $("#tiposasociados-table #editar").click(function(){
+            let id_tel = $(this).closest('tr').find('td:first-child').text();
+            let link = `{{route('tiposasociados.edit', ':id')}}`.replace(':id', id_tel);
+            
+            document.location.href = link;
+        });
+
+    </script>
 
 @endsection

@@ -7,7 +7,8 @@ use App\Http\Requests\UpdategeneroRequest;
 use App\Repositories\generoRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class generoController extends AppBaseController
@@ -15,9 +16,31 @@ class generoController extends AppBaseController
     /** @var generoRepository $generoRepository*/
     private $generoRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(generoRepository $generoRepo)
     {
-        $this->generoRepository = $generoRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($generoRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->generoRepository = $generoRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -32,7 +55,11 @@ class generoController extends AppBaseController
         $generos = $this->generoRepository->all();
 
         return view('personas.generos.index')
-            ->with('generos', $generos);
+            ->with([
+                'generos' => $generos,
+                'incluir_botones' => $this->incluir_botones,
+                'menu' => $this->menu,
+            ]);
     }
 
     /**
@@ -42,7 +69,11 @@ class generoController extends AppBaseController
      */
     public function create()
     {
-        return view('personas.generos.create');
+        return view('personas.generos.create')
+        ->with([
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -63,25 +94,6 @@ class generoController extends AppBaseController
         return redirect(route('generos.index'));
     }
 
-    /**
-     * Display the specified genero.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $genero = $this->generoRepository->find($id);
-
-        if (empty($genero)) {
-            Flash::error('Genero not found');
-
-            return redirect(route('generos.index'));
-        }
-
-        return view('personas.generos.show')->with('genero', $genero);
-    }
 
     /**
      * Show the form for editing the specified genero.
@@ -100,7 +112,12 @@ class generoController extends AppBaseController
             return redirect(route('generos.index'));
         }
 
-        return view('personas.generos.edit')->with('genero', $genero);
+        return view('personas.generos.edit')
+        ->with([
+            'genero' => $genero,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

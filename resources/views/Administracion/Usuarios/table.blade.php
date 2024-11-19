@@ -17,10 +17,7 @@
                     <td>{{$usuario->created_at}}</td>
                     <td width="120">
                     <div class='btn-group'>
-                        <a href="{{ route('Administracion.edit', [$usuario->id]) }}"
-                           class='btn btn-outline-success btn-sm'>
-                           <i class="far fa-edit"></i> Editar
-                        </a>
+                        {!! $incluir_botones['editar'] !!}
                     </div>
                 </td>
                 </tr>

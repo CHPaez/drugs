@@ -25,7 +25,7 @@
         </div>
 
         <div class="card-footer">
-            {!! Form::submit('Actualizar', ['class' => 'btn btn-primary']) !!}
+            {!! $incluir_botones['actualizar'] !!}
         </div>
 
         {!! Form::close() !!}

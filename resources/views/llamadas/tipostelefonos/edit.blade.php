@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Edit Tipostelefonos</h1>
+                    <h4>Edit Tipostelefonos</h4>
                 </div>
             </div>
         </div>
@@ -21,13 +21,13 @@
 
             <div class="card-body">
                 <div class="row">
-                    @include('llamadas.historialllamadas.fields')
+                    @include('llamadas.tipostelefonos.fields')
                 </div>
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('tipostelefonos.index') }}" class="btn btn-default">Cancel</a>
+                {!! $incluir_botones['actualizar'] !!}
+                <a href="{{ route('tipostelefonos.index') }}" class="btn btn-default">Cancelar</a>
             </div>
 
             {!! Form::close() !!}

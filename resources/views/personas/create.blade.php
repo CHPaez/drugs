@@ -27,7 +27,7 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                {!! $incluir_botones['guardar'] !!}
                 <a href="{{ route('personas.index') }}" class="btn btn-default">Cancel</a>
             </div>
 

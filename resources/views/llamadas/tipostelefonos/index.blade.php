@@ -3,14 +3,9 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Tipos de Telefonos</h1>
-                </div>
-                <div class="col-sm-6">
-                    <a class="btn btn-primary float-right"
-                       href="{{ route('tipostelefonos.create') }}">
-                        Agregar
-                    </a>
+                <div class="col-sm-6 d-flex">
+                    <h4>Tipos de Telefonos</h4>
+                    {!! $incluir_botones['crear'] !!}
                 </div>
             </div>
         </div>
@@ -25,16 +20,26 @@
         <div class="card">
             <div class="card-body p-0">
                 @include('llamadas.tipostelefonos.table')
-
-                <div class="card-footer clearfix">
-                    <div class="float-right">
-                        
-                    </div>
-                </div>
             </div>
-
         </div>
     </div>
 
+    @stop
+    @section('js')
+
+    <script>
+        $("#nuevo_telefono").click(function(){
+            let link = `{{route('tipostelefonos.create')}}`; 
+            document.location.href = link;
+        })
+
+        $("#tipostelefonos-table #editar_t_tel").click(function(){
+            let id_tel = $(this).closest('tr').find('td:first-child').text();
+            let link = `{{route('tipostelefonos.edit', ':id')}}`.replace(':id', id_tel);
+            
+            document.location.href = link;
+        });
+
+    </script>
 @endsection
 

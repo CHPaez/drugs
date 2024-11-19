@@ -7,7 +7,8 @@ use App\Http\Requests\UpdateasociadosRequest;
 use App\Repositories\asociadosRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class asociadosController extends AppBaseController
@@ -15,9 +16,31 @@ class asociadosController extends AppBaseController
     /** @var asociadosRepository $asociadosRepository*/
     private $asociadosRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','c_asociados','c_asociados'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(asociadosRepository $asociadosRepo)
     {
-        $this->asociadosRepository = $asociadosRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($asociadosRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->asociadosRepository = $asociadosRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -27,12 +50,16 @@ class asociadosController extends AppBaseController
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $asociados = $this->asociadosRepository->all();
 
         return view('asociados.index')
-            ->with('asociados', $asociados);
+            ->with([
+                'asociados' => $asociados,
+                'incluir_botones' => $this->incluir_botones,
+                'menu' => $this->menu,
+            ]);
     }
 
     /**
@@ -42,7 +69,10 @@ class asociadosController extends AppBaseController
      */
     public function create()
     {
-        return view('asociados.create');
+        return view('asociados.create')->with([
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -56,32 +86,13 @@ class asociadosController extends AppBaseController
     {
         $input = $request->all();
 
-        $asociados = $this->asociadosRepository->create($input);
+        $this->asociadosRepository->create($input);
 
         Flash::success('Asociados saved successfully.');
 
         return redirect(route('asociados.index'));
     }
 
-    /**
-     * Display the specified asociados.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $asociados = $this->asociadosRepository->find($id);
-
-        if (empty($asociados)) {
-            Flash::error('Asociados not found');
-
-            return redirect(route('asociados.index'));
-        }
-
-        return view('asociados.show')->with('asociados', $asociados);
-    }
 
     /**
      * Show the form for editing the specified asociados.
@@ -100,7 +111,11 @@ class asociadosController extends AppBaseController
             return redirect(route('asociados.index'));
         }
 
-        return view('asociados.edit')->with('asociados', $asociados);
+        return view('asociados.edit')->with([
+            'asociados' => $asociados,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

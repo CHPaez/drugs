@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Traits\MenuManager;
 class HomeController extends Controller
 {
+
+    use MenuManager;
     /**
      * Create a new controller instance.
      *
@@ -23,6 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('app');
+        $menu = $this->init()->get_links();
+        return view('app')->with(compact('menu'));
     }
 }

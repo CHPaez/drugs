@@ -116,11 +116,24 @@ abstract class BaseRepository
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
+    public function all($format = "stdClass", $search = [], $skip = null, $limit = null, $columns = ['*'])
     {
         $query = $this->allQuery($search, $skip, $limit);
 
-        return $query->get($columns);
+        $formater = [
+            "stdClass" => function($query, $columns) {
+                return $query->get($columns);
+            },
+            "array" => function($query, $columns) {
+                return $query->get($columns)->toArray();
+            },
+            'json' => function($query, $columns) {
+                return json_encode($query->get($columns)->toArray());
+            }
+        ];
+
+
+        return $formater[$format]($query, $columns);
     }
 
     /**

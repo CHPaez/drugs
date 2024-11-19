@@ -8,8 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Modulos extends Model
 {
     use HasFactory;
-
+    public $primaryKey = "id";
     public static $rules = [
-        'MoNombre' => 'required',
+       
+    ];
+    
+    protected $fillable = [
+        'MoNombre','MoRoute','MoSubmodulo'
     ];
 }

@@ -21,15 +21,8 @@
             <td width="120">
                 {!! Form::open(['route' => ['telefonopersonas.destroy', $telefonopersona->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
-                    <a href="{{ route('telefonopersonas.show', [$telefonopersona->id]) }}"
-                       class='btn btn-outline-primary btn-sm'>
-                       <i class="far fa-eye"></i> Ver
-                    </a>
-                    <a href="{{ route('telefonopersonas.edit', [$telefonopersona->id]) }}"
-                       class='btn btn-outline-success btn-sm'>
-                       <i class="far fa-edit"></i> Editar
-                    </a>
-                    {!! Form::button('<i class="far fa-trash-alt"></i> Eliminar', ['type' => 'submit', 'class' => 'btn btn-outline-danger btn-sm', 'onclick' => "return confirm('Estas seguro?')"]) !!}
+                    {!! $incluir_botones['editar'] !!}
+                    {!! $incluir_botones['eliminar'] !!}
                 </div>
                 {!! Form::close() !!}
             </td>

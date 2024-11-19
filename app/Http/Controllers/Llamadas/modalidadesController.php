@@ -7,7 +7,8 @@ use App\Http\Requests\UpdatemodalidadesRequest;
 use App\Repositories\modalidadesRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class modalidadesController extends AppBaseController
@@ -15,9 +16,31 @@ class modalidadesController extends AppBaseController
     /** @var modalidadesRepository $modalidadesRepository*/
     private $modalidadesRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(modalidadesRepository $modalidadesRepo)
     {
-        $this->modalidadesRepository = $modalidadesRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($modalidadesRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->modalidadesRepository = $modalidadesRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -32,7 +55,11 @@ class modalidadesController extends AppBaseController
         $modalidades = $this->modalidadesRepository->all();
         
         return view('llamadas.modalidades.index')
-            ->with('modalidades', $modalidades);
+            ->with([
+                'modalidades' => $modalidades,
+                'incluir_botones' => $this->incluir_botones,
+                'menu' => $this->menu,
+            ]);
     }
 
     /**
@@ -42,7 +69,10 @@ class modalidadesController extends AppBaseController
      */
     public function create()
     {
-        return view('llamadas.modalidades.create');
+        return view('llamadas.modalidades.create')->with([
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -63,25 +93,6 @@ class modalidadesController extends AppBaseController
         return redirect(route('modalidades.index'));
     }
 
-    /**
-     * Display the specified modalidades.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $modalidades = $this->modalidadesRepository->find($id);
-
-        if (empty($modalidades)) {
-            Flash::error('Modalidades not found');
-
-            return redirect(route('modalidades.index'));
-        }
-
-        return view('llamadas.modalidades.show')->with('modalidades', $modalidades);
-    }
 
     /**
      * Show the form for editing the specified modalidades.
@@ -100,7 +111,11 @@ class modalidadesController extends AppBaseController
             return redirect(route('modalidades.index'));
         }
 
-        return view('llamadas.modalidades.edit')->with('modalidades', $modalidades);
+        return view('llamadas.modalidades.edit')->with([
+            'modalidades' => $modalidades,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Crear Tipos telefonos</h1>
+                    <h4>Crear Tipos telefonos</h4>
                 </div>
             </div>
         </div>
@@ -27,8 +27,8 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('tipostelefonos.index') }}" class="btn btn-default">Cancel</a>
+                {!! $incluir_botones['guardar'] !!}
+                <a href="{{ route('tipostelefonos.index') }}" class="btn btn-default">Cancelar</a>
             </div>
 
             {!! Form::close() !!}

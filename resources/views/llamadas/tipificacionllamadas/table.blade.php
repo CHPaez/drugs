@@ -31,17 +31,10 @@
             <td>{{ $tipificacionllamadas->TlEstadoTipificacion }}</td>
             <td>{{ $tipificacionllamadas->TIObservaciones }}</td>
                 <td width="120">
-                    {!! Form::open(['route' => ['tipificacionllamadas.destroy', $tipificacionllamadas->Id], 'method' => 'delete']) !!}
+                    {!! Form::open(['route' => ['tipificacionllamadas.destroy', $tipificacionllamadas->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
-                        <a href="{{ route('tipificacionllamadas.show', [$tipificacionllamadas->Id]) }}"
-                           class='btn btn-default btn-xs'>
-                            <i class="far fa-eye"></i>
-                        </a>
-                        <a href="{{ route('tipificacionllamadas.edit', [$tipificacionllamadas->Id]) }}"
-                           class='btn btn-default btn-xs'>
-                            <i class="far fa-edit"></i>
-                        </a>
-                        {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        {!! $incluir_botones['editar'] !!}
+                        {!! $incluir_botones['eliminar'] !!}
                     </div>
                     {!! Form::close() !!}
                 </td>

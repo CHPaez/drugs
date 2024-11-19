@@ -1,7 +1,4 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
- 
-
-<!-- Tluser Field -->
+ <!-- Tluser Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('TlUser', 'Usuario') !!}
     {!! Form::select('TlUser', $users, $authenticatedUser->id, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
@@ -23,27 +20,27 @@
 
 <!-- Tlpersonacontacto Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('TlPersonaContacto', 'Persona:') !!}
-    {!! Form::select('TlPersonaContacto', ['' => ''] + \App\Models\Personas::pluck('PeNombre', 'id')->toArray(), null, ['class' => 'form-control', 'id' => 'TlPersona']) !!}
+    {!! Form::label('TlPersona', 'Persona:') !!}
+    {!! Form::select('TlPersona', ['' => ''] + \App\Models\Personas::pluck('PeNombre', 'id')->toArray(), null, ['class' => 'form-control', 'id' => 'TlPersona']) !!}
 </div>
 
 
 <!-- Tltelefonocontacto Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('TlTelefonoContacto', 'Telefono de Contacto:') !!}
-    {!! Form::select('TlTelefonoContacto', ['' => ''] + \App\Models\telefonopersonas::pluck('TeTelefono', 'id')->toArray(), null, ['class' => 'form-control', 'id' => 'TlTelefono']) !!}
+    {!! Form::number('TlTelefonoContacto', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Tltelefonowhatsapp Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('TlTelefonoWhatsapp', 'Tltelefonowhatsapp:') !!}
-    {!! Form::select('TlTelefonoWhatsapp', ['' => ''] + \App\Models\telefonopersonas::pluck('TeTelefono', 'id')->toArray(), null, ['class' => 'form-control', 'id' => 'TlTelefonoWhatsapp']) !!}
+    {!! Form::number('TlTelefonoWhatsapp', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Tlprograma Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('TlPrograma', 'Programa:') !!}
-    {!! Form::select('TlPrograma', ['' => ''] + \App\Models\Programas::pluck('PrNombre', 'id')->toArray(), null, ['class' => 'form-control', 'id' => 'TlPrograma']) !!}
+    {!! Form::select('TlPrograma',$programas, null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Tlestadotipificacion Field -->

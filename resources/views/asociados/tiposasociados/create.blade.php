@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Crear Relacion Droguerias</h1>
+                    <h4>Crear Relacion Droguerias</h4>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                {!! $incluir_botones['guardar'] !!}
                 <a href="{{ route('tiposasociados.index') }}" class="btn btn-default">Cancel</a>
             </div>
 
