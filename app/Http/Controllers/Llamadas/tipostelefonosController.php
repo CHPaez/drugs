@@ -7,7 +7,8 @@ use App\Http\Requests\UpdatetipostelefonosRequest;
 use App\Repositories\tipostelefonosRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class tipostelefonosController extends AppBaseController
@@ -15,9 +16,32 @@ class tipostelefonosController extends AppBaseController
     /** @var tipostelefonosRepository $tipostelefonosRepository*/
     private $tipostelefonosRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','nuevo_telefono','nuevo_telefono'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar_t_tel','editar_t_tel'],
+        "eliminar" => ['submit','eliminar_t_tel','eliminar_t_tel']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(tipostelefonosRepository $tipostelefonosRepo)
     {
-        $this->tipostelefonosRepository = $tipostelefonosRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($tipostelefonosRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->tipostelefonosRepository = $tipostelefonosRepo;
+            
+            return $next($request);
+        });
+       
     }
 
     /**
@@ -27,12 +51,16 @@ class tipostelefonosController extends AppBaseController
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $tipostelefonos = $this->tipostelefonosRepository->all();
 
         return view('llamadas.tipostelefonos.index')
-            ->with('tipostelefonos', $tipostelefonos);
+            ->with([
+                'tipostelefonos' => $tipostelefonos,
+                'incluir_botones' => $this->incluir_botones,
+                'menu' => $this->menu,
+            ]);
     }
 
     /**
@@ -42,7 +70,10 @@ class tipostelefonosController extends AppBaseController
      */
     public function create()
     {
-        return view('llamadas.tipostelefonos.create');
+        return view('llamadas.tipostelefonos.create')->with([
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -56,32 +87,13 @@ class tipostelefonosController extends AppBaseController
     {
         $input = $request->all();
 
-        $tipostelefonos = $this->tipostelefonosRepository->create($input);
+        $this->tipostelefonosRepository->create($input);
 
-        Flash::success('Tipostelefonos saved successfully.');
+        Flash::success('Se ha agregado un nuevo tipo de telefono de manera satisfactoria');
 
         return redirect(route('tipostelefonos.index'));
     }
 
-    /**
-     * Display the specified tipostelefonos.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $tipostelefonos = $this->tipostelefonosRepository->find($id);
-
-        if (empty($tipostelefonos)) {
-            Flash::error('Tipostelefonos not found');
-
-            return redirect(route('tipostelefonos.index'));
-        }
-
-        return view('llamadas.tipostelefonos.show')->with('tipostelefonos', $tipostelefonos);
-    }
 
     /**
      * Show the form for editing the specified tipostelefonos.
@@ -95,12 +107,16 @@ class tipostelefonosController extends AppBaseController
         $tipostelefonos = $this->tipostelefonosRepository->find($id);
 
         if (empty($tipostelefonos)) {
-            Flash::error('Tipostelefonos not found');
+            Flash::error('El tipo de telefono no fue encontrado');
 
             return redirect(route('llamadas.tipostelefonos.index'));
         }
 
-        return view('llamadas.tipostelefonos.edit')->with('tipostelefonos', $tipostelefonos);
+        return view('llamadas.tipostelefonos.edit')->with([
+            'tipostelefonos' => $tipostelefonos,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -116,14 +132,14 @@ class tipostelefonosController extends AppBaseController
         $tipostelefonos = $this->tipostelefonosRepository->find($id);
 
         if (empty($tipostelefonos)) {
-            Flash::error('Tipostelefonos not found');
+            Flash::error('El tipo de telefono no fue encontrado');
 
             return redirect(route('llamadas.tipostelefonos.index'));
         }
 
         $tipostelefonos = $this->tipostelefonosRepository->update($request->all(), $id);
 
-        Flash::success('Tipostelefonos updated successfully.');
+        Flash::success('El tipo de telefono fue actualizado de manera correcta');
 
         return redirect(route('llamadas.tipostelefonos.index'));
     }
@@ -142,14 +158,14 @@ class tipostelefonosController extends AppBaseController
         $tipostelefonos = $this->tipostelefonosRepository->find($id);
 
         if (empty($tipostelefonos)) {
-            Flash::error('Tipostelefonos not found');
+            Flash::error('El tipo de telefono no fue encontrado');
 
             return redirect(route('tipostelefonos.index'));
         }
 
         $this->tipostelefonosRepository->delete($id);
 
-        Flash::success('Tipostelefonos deleted successfully.');
+        Flash::success('El tipo de telefono fue eliminado de manera correcta');
 
         return redirect(route('tipostelefonos.index'));
     }

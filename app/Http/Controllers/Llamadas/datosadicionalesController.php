@@ -7,7 +7,8 @@ use App\Http\Requests\UpdatedatosadicionalesRequest;
 use App\Repositories\datosadicionalesRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class datosadicionalesController extends AppBaseController
@@ -15,9 +16,31 @@ class datosadicionalesController extends AppBaseController
     /** @var datosadicionalesRepository $datosadicionalesRepository*/
     private $datosadicionalesRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(datosadicionalesRepository $datosadicionalesRepo)
     {
-        $this->datosadicionalesRepository = $datosadicionalesRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($datosadicionalesRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->datosadicionalesRepository = $datosadicionalesRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -32,7 +55,11 @@ class datosadicionalesController extends AppBaseController
         $datosadicionales = $this->datosadicionalesRepository->all();
 
         return view('llamadas.datosadicionales.index')
-            ->with('datosadicionales', $datosadicionales);
+        ->with([
+            'datosadicionales' => $datosadicionales,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -42,7 +69,11 @@ class datosadicionalesController extends AppBaseController
      */
     public function create()
     {
-        return view('llamadas.datosadicionales.create');
+        return view('llamadas.datosadicionales.create')
+        ->with([
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -64,26 +95,6 @@ class datosadicionalesController extends AppBaseController
     }
 
     /**
-     * Display the specified datosadicionales.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $datosadicionales = $this->datosadicionalesRepository->find($id);
-
-        if (empty($datosadicionales)) {
-            Flash::error('Datosadicionales not found');
-
-            return redirect(route('datosadicionales.index'));
-        }
-
-        return view('llamadas.datosadicionales.show')->with('datosadicionales', $datosadicionales);
-    }
-
-    /**
      * Show the form for editing the specified datosadicionales.
      *
      * @param int $id
@@ -100,7 +111,12 @@ class datosadicionalesController extends AppBaseController
             return redirect(route('datosadicionales.index'));
         }
 
-        return view('llamadas.datosadicionales.edit')->with('datosadicionales', $datosadicionales);
+        return view('llamadas.datosadicionales.edit')
+        ->with([
+            'datosadicionales' => $datosadicionales,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

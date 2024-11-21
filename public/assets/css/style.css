@@ -13055,7 +13055,7 @@ code {
   padding-left: 0; }
   .form-check .form-check-label {
     display: block;
-    margin-left: 1.75rem;
+    margin-left: 0.75rem;
     font-size: 0.875rem;
     line-height: 1.5; }
     .rtl .form-check .form-check-label {

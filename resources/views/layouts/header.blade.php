@@ -22,13 +22,18 @@
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.base.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.min.css" />
+    
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
     <!-- Plugins -->
 
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
     <!-- Bootstrap CSS v5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
 </head>
 
 <body>
@@ -102,114 +107,7 @@
                             <i class="mdi mdi-home menu-icon"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#Personas" aria-expanded="false" aria-controls="Personas">
-                            <span class="menu-title">Personas</span>
-                            <i class="menu-arrow"></i>
-                            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-                        </a>
-                        <div class="collapse" id="Personas">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('personas.index') }}">{{ __('Personas') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('tiposidentificaciones.index') }}">{{ __('Tipos de Identificaciones') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('generos.index') }}">{{ __('Generos') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('estadospersonas.index') }}">{{ __('Estados Personas') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('telefonopersonas.index') }}">{{ __('Telefono de personas') }}</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#Droguerias" aria-expanded="false" aria-controls="Droguerias">
-                            <span class="menu-title"> Droguerias</span>
-                            <i class="menu-arrow"></i>
-                            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-                        </a>
-                        <div class="collapse" id="Droguerias">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('tiposdroguerias.index') }}">{{ __('Tipos Droguerias') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('droguerias.index') }}">{{ __('Droguerias') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('drogueriaspersonas.index') }}">{{ __('Droguerias Personas') }}</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#Asociados" aria-expanded="false" aria-controls="ui-basic">
-                            <span class="menu-title">Asociados</span>
-                            <i class="menu-arrow"></i>
-                            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-                        </a>
-                        <div class="collapse" id="Asociados">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('tiposasociados.index') }}">{{ __('Relacion Drogueria') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('asociados.index') }}">{{ __('Asociados') }}</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#Paises" aria-expanded="false" aria-controls="ui-basic">
-                            <span class="menu-title">Paises</span>
-                            <i class="menu-arrow"></i>
-                            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-                        </a>
-                        <div class="collapse" id="Paises">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('paises.index') }}">{{ __('Paises') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('departamentos.index') }}">{{ __('Departamentos') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('ciudades.index') }}">{{ __('Tipos Ciudades') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('indicativosciudades.index') }}">{{ __('Indicativos Ciudades') }}</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#Llamadas" aria-expanded="false" aria-controls="ui-basic">
-                            <span class="menu-title">Llamadas</span>
-                            <i class="menu-arrow"></i>
-                            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-                        </a>
-                        <div class="collapse" id="Llamadas">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('tipificacionllamadas.index') }}">{{ __('Tipificacion Llamadas') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('inscritos.index') }}">{{ __('Inscritos') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('programas.index') }}">{{ __('Programas') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('tipostelefonos.index') }}">{{ __('Tipos Telefonos') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('estadostipificacions.index') }}">{{ __('Estado Tipificaciones') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('causales.index') }}">{{ __('Causales Tipificacion') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('modalidades.index') }}">{{ __('Modalidades') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('horarios.index') }}">{{ __('Horarios') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('datosadicionales.index') }}">{{ __('Datos Adicionales') }}</a></li>
-                                
-                                
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#AdminUser" aria-expanded="false" aria-controls="ui-basic">
-                            <span class="menu-title">Admin. Usuarios</span>
-                            <i class="menu-arrow"></i>
-                            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-                        </a>
-                        <div class="collapse" id="AdminUser">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('Administracion.index') }}">{{ __('Usuarios') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="#">{{ __('Roles de usuario') }}</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#Configuracion" aria-expanded="false" aria-controls="ui-basic">
-                            <span class="menu-title">Configuracion</span>
-                            <i class="menu-arrow"></i>
-                            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-                        </a>
-                        <div class="collapse" id="Configuracion">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="#">{{ __('Roles') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ route('Modulos.index') }}">{{ __('Modulos') }}</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="#">{{ __('Permisos del Modulo') }}</a></li>
-                            </ul>
-                        </div>
-                    </li>
-
+                    {!! $menu !!}
                 </ul>
             </nav>
             <!-- partial -->

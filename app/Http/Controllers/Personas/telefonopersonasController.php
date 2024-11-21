@@ -12,7 +12,8 @@ use App\Http\Requests\UpdatetelefonopersonasRequest;
 use App\Repositories\telefonopersonasRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class telefonopersonasController extends AppBaseController
@@ -20,9 +21,31 @@ class telefonopersonasController extends AppBaseController
     /** @var telefonopersonasRepository $telefonopersonasRepository*/
     private $telefonopersonasRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(telefonopersonasRepository $telefonopersonasRepo)
     {
-        $this->telefonopersonasRepository = $telefonopersonasRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($telefonopersonasRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->telefonopersonasRepository = $telefonopersonasRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -37,7 +60,11 @@ class telefonopersonasController extends AppBaseController
         $telefonopersonas = $this->telefonopersonasRepository->all();
 
         return view('personas.telefonopersonas.index')
-            ->with('telefonopersonas', $telefonopersonas);
+            ->with([
+                'telefonopersonas' => $telefonopersonas,
+                'incluir_botones' => $this->incluir_botones,
+                'menu' => $this->menu,
+            ]);
     }
 
     /**
@@ -54,10 +81,14 @@ class telefonopersonasController extends AppBaseController
         $indicativosciudades = indicativosciudades::pluck('IcIndicativo', 'id');
 
         return view('personas.telefonopersonas.create')
-        ->with('telefonopersonas', $telefonopersonas)
-        ->with('personas', $personas)
-        ->with('tipostelefonos', $tipostelefonos)
-        ->with('indicativosciudades', $indicativosciudades);
+        ->with([
+            'telefonopersonas' => $telefonopersonas,
+            'personas' => $personas,
+            'tipostelefonos' => $tipostelefonos,
+            'indicativosciudades' => $indicativosciudades,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -75,36 +106,9 @@ class telefonopersonasController extends AppBaseController
 
         Flash::success('Telefonopersonas saved successfully.');
 
-        return redirect(route('telefonopersonas.index'));
+        return redirect(route('personas.telefonopersonas.index'));
     }
 
-    /**
-     * Display the specified telefonopersonas.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $telefonopersonas = $this->telefonopersonasRepository->find($id);
-
-        $personas = personas::pluck('PeNumeroIdentificacion', 'id');
-        $tipostelefonos = tipostelefonos::pluck('TtTipo', 'id');
-        $indicativosciudades = indicativosciudades::pluck('IcIndicativo', 'id');$personas = personas::pluck('PeNumeroIdentificacion', 'id');
-
-        if (empty($telefonopersonas)) {
-            Flash::error('Telefonopersonas not found');
-
-            return redirect(route('personas.telefonopersonas.index'));
-        }
-
-        return view('personas.telefonopersonas.show')
-        ->with('telefonopersonas', $telefonopersonas)
-        ->with('personas', $personas)
-        ->with('tipostelefonos', $tipostelefonos)
-        ->with('indicativosciudades', $indicativosciudades);
-    }
 
     /**
      * Show the form for editing the specified telefonopersonas.
@@ -128,10 +132,14 @@ class telefonopersonasController extends AppBaseController
         }
 
         return view('personas.telefonopersonas.edit')
-        ->with('telefonopersonas', $telefonopersonas)
-        ->with('personas', $personas)
-        ->with('tipostelefonos', $tipostelefonos)
-        ->with('indicativosciudades', $indicativosciudades);
+        ->with([
+            'telefonopersonas' => $telefonopersonas,
+            'personas' => $personas,
+            'tipostelefonos' => $tipostelefonos,
+            'indicativosciudades' => $indicativosciudades,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

@@ -1,11 +1,10 @@
-@extends('layouts.app')
-
+@extends('/layouts/header')
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Edit Modalidades</h1>
+                    <h4>Edit Modalidades</h4>
                 </div>
             </div>
         </div>
@@ -21,12 +20,12 @@
 
             <div class="card-body">
                 <div class="row">
-                    @include('modalidades.fields')
+                    @include('llamadas.modalidades.fields')
                 </div>
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                {!! $incluir_botones['actualizar'] !!}
                 <a href="{{ route('modalidades.index') }}" class="btn btn-default">Cancel</a>
             </div>
 

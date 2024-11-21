@@ -7,7 +7,8 @@ use App\Http\Requests\UpdateestadospersonasRequest;
 use App\Repositories\estadospersonasRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class estadospersonasController extends AppBaseController
@@ -15,9 +16,31 @@ class estadospersonasController extends AppBaseController
     /** @var estadospersonasRepository $estadospersonasRepository*/
     private $estadospersonasRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(estadospersonasRepository $estadospersonasRepo)
     {
-        $this->estadospersonasRepository = $estadospersonasRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($estadospersonasRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->estadospersonasRepository = $estadospersonasRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -32,7 +55,11 @@ class estadospersonasController extends AppBaseController
         $estadospersonas = $this->estadospersonasRepository->all();
 
         return view('personas.estadospersonas.index')
-            ->with('estadospersonas', $estadospersonas);
+        ->with([
+            'estadospersonas' => $estadospersonas,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -63,25 +90,6 @@ class estadospersonasController extends AppBaseController
         return redirect(route('estadospersonas.index'));
     }
 
-    /**
-     * Display the specified estadospersonas.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $estadospersonas = $this->estadospersonasRepository->find($id);
-
-        if (empty($estadospersonas)) {
-            Flash::error('Estadospersonas not found');
-
-            return redirect(route('estadospersonas.index'));
-        }
-
-        return view('personas.estadospersonas.show')->with('estadospersonas', $estadospersonas);
-    }
 
     /**
      * Show the form for editing the specified estadospersonas.
@@ -100,7 +108,12 @@ class estadospersonasController extends AppBaseController
             return redirect(route('estadospersonas.index'));
         }
 
-        return view('personas.estadospersonas.edit')->with('estadospersonas', $estadospersonas);
+        return view('personas.estadospersonas.edit')
+        ->with([
+            'estadospersonas' => $estadospersonas,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

@@ -7,7 +7,8 @@ use App\Http\Requests\UpdateinscritosRequest;
 use App\Repositories\inscritosRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class inscritosController extends AppBaseController
@@ -15,9 +16,31 @@ class inscritosController extends AppBaseController
     /** @var inscritosRepository $inscritosRepository*/
     private $inscritosRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(inscritosRepository $inscritosRepo)
     {
-        $this->inscritosRepository = $inscritosRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($inscritosRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->inscritosRepository = $inscritosRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -27,12 +50,16 @@ class inscritosController extends AppBaseController
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $inscritos = $this->inscritosRepository->all();
 
         return view('llamadas.inscritos.index')
-            ->with('inscritos', $inscritos);
+            ->with([
+                'inscritos' => $inscritos,
+                'incluir_botones' => $this->incluir_botones,
+                'menu' => $this->menu,
+            ]);
     }
 
     /**
@@ -42,7 +69,11 @@ class inscritosController extends AppBaseController
      */
     public function create()
     {
-        return view('llamadas.inscritos.create');
+        return view('llamadas.inscritos.create')     
+            ->with([
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -63,25 +94,6 @@ class inscritosController extends AppBaseController
         return redirect(route('inscritos.index'));
     }
 
-    /**
-     * Display the specified inscritos.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $inscritos = $this->inscritosRepository->find($id);
-
-        if (empty($inscritos)) {
-            Flash::error('Inscritos not found');
-
-            return redirect(route('inscritos.index'));
-        }
-
-        return view('inscritos.show')->with('inscritos', $inscritos);
-    }
 
     /**
      * Show the form for editing the specified inscritos.
@@ -100,7 +112,12 @@ class inscritosController extends AppBaseController
             return redirect(route('inscritos.index'));
         }
 
-        return view('inscritos.edit')->with('inscritos', $inscritos);
+        return view('inscritos.edit')
+        ->with([
+            'inscritos' => $inscritos,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

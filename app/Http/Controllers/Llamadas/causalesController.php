@@ -7,7 +7,8 @@ use App\Http\Requests\UpdatecausalesRequest;
 use App\Repositories\causalesRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class causalesController extends AppBaseController
@@ -15,9 +16,31 @@ class causalesController extends AppBaseController
     /** @var causalesRepository $causalesRepository*/
     private $causalesRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(causalesRepository $causalesRepo)
     {
-        $this->causalesRepository = $causalesRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($causalesRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->causalesRepository = $causalesRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -32,7 +55,11 @@ class causalesController extends AppBaseController
         $causales = $this->causalesRepository->all();
 
         return view('llamadas.causales.index')
-            ->with('causales', $causales);
+        ->with([
+            'causales' => $causales,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -42,7 +69,11 @@ class causalesController extends AppBaseController
      */
     public function create()
     {
-        return view('llamadas.causales.create');
+        return view('llamadas.causales.create')
+        ->with([
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -64,26 +95,6 @@ class causalesController extends AppBaseController
     }
 
     /**
-     * Display the specified causales.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $causales = $this->causalesRepository->find($id);
-
-        if (empty($causales)) {
-            Flash::error('Causales not found');
-
-            return redirect(route('causales.index'));
-        }
-
-        return view('llamadas.causales.show')->with('causales', $causales);
-    }
-
-    /**
      * Show the form for editing the specified causales.
      *
      * @param int $id
@@ -100,7 +111,12 @@ class causalesController extends AppBaseController
             return redirect(route('causales.index'));
         }
 
-        return view('llamadas.causales.edit')->with('causales', $causales);
+        return view('llamadas.causales.edit')
+        ->with([
+            'causales' => $causales,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

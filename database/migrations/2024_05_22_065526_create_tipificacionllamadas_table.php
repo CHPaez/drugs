@@ -16,10 +16,10 @@ class CreateTipificacionllamadasTable extends Migration
     {
         Schema::create('tipificacionllamadas', function (Blueprint $table) {
             $table->bigIncrements('Id');
-            $table->unsignedBigInteger('TlUser');           
+            $table->bigInteger('TlUser');
             $table->bigInteger('TlCodigoAsociado');
-            $table->unsignedBigInteger('TlDrogueria');
-            $table->unsignedBigInteger('TlPersonaContacto'); 
+            $table->bigInteger('TlDrogueria');
+            $table->bigInteger('TlPersonaContacto');
             $table->bigInteger('TlTelefonoContacto');
             $table->bigInteger('TlTelefonoWhatsapp');
             $table->bigInteger('TlPrograma');
@@ -27,12 +27,14 @@ class CreateTipificacionllamadasTable extends Migration
             $table->bigInteger('TlEstadoTipificacion');
             $table->string('TIObservaciones');
             $table->timestamps();
-    
+
+
             $table->foreign('TlUser')->references('Id')->on('users')->onDelete('no action')->onUpdate('no action');
             $table->foreign('TlDrogueria')->references('Id')->on('droguerias')->onDelete('no action')->onUpdate('no action');
             $table->foreign('TlPersonaContacto')->references('Id')->on('personas')->onDelete('no action')->onUpdate('no action');
         });
     }
+
     /**
      * Reverse the migrations.
      *

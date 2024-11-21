@@ -1,7 +1,4 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
- 
-
-<!-- Tluser Field -->
+ <!-- Tluser Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('TlUser', 'Usuario') !!}
     {!! Form::select('TlUser', $users, $authenticatedUser->id, ['class' => 'form-control', 'disabled' => 'disabled']) !!}

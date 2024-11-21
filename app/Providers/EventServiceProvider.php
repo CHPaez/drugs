@@ -18,6 +18,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        \Illuminate\Routing\Events\RouteMatched::class => [
+            \App\Listeners\RouteCreation::class,
+        ]
     ];
 
     /**

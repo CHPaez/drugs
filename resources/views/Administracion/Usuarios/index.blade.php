@@ -4,11 +4,8 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex">
-                    <h3>Administracion de usuarios</h3>
-                    <a class="btn btn-primary float-right m-1"
-                       href="{{route('Administracion.create')}}">
-                        Agregar
-                    </a>
+                    <h4>Administracion de usuarios</h4>
+                    {!! $incluir_botones['crear'] !!}
                 </div>  
             </div>
         </div>
@@ -24,6 +21,20 @@
 
         </div>
     </div>
+    @stop
+    @section('js')
+
+    <script>
+        $("#usuarios-table #editar_usuario").click(function(){
+            let id_usuario = $(this).closest('tr').find('td:first-child').text();
+            let link = `{{route('Administracion.edit', ':id')}}`.replace(':id', id_usuario);
+            console.log(link,'a');
+            
+            document.location.href = link;
+        })
+    </script>
 
 @endsection
+
+
 

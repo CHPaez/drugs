@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h3>Agregar un nuevo usuario</h3>
+                    <h4>Agregar un nuevo usuario</h4>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Guardar', ['class' => 'btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn']) !!}
+                {!! $incluir_botones['guardar'] !!}
             </div>
 
             {!! Form::close() !!}

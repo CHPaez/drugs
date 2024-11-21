@@ -16,12 +16,12 @@ class RolesPermisos extends Migration
         Schema::create('Roles_Permisos', function(Blueprint $table){
             $table->id();
             $table->foreignId('Roles_id')->constrained()->onDelete('cascade');
-            $table->foreignId('Modulos_id')->constrained()->onDelete('cascade');
-            $table->integer('Read');
-            $table->integer('Update');
-            $table->integer('Delete');
-            $table->integer('Create');
-            $table->integer('Estado');
+            $table->foreignId('Modulos_id')->unique()->constrained()->onDelete('cascade');
+            $table->integer('Read')->nullable();
+            $table->integer('Update')->nullable();
+            $table->integer('Delete')->nullable();
+            $table->integer('Create')->nullable();
+            $table->integer('Estado')->nullable();
             $table->timestamps();
 
             $table->unique(['Roles_id','Modulos_id']);

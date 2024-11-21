@@ -7,7 +7,8 @@ use App\Http\Requests\UpdateestadostipificacionRequest;
 use App\Repositories\estadostipificacionRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class estadostipificacionController extends AppBaseController
@@ -15,9 +16,31 @@ class estadostipificacionController extends AppBaseController
     /** @var estadostipificacionRepository $estadostipificacionRepository*/
     private $estadostipificacionRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(estadostipificacionRepository $estadostipificacionRepo)
     {
-        $this->estadostipificacionRepository = $estadostipificacionRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($estadostipificacionRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->estadostipificacionRepository = $estadostipificacionRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -32,7 +55,11 @@ class estadostipificacionController extends AppBaseController
         $estadostipificacions = $this->estadostipificacionRepository->all();
 
         return view('llamadas.estadostipificacions.index')
-            ->with('estadostipificacions', $estadostipificacions);
+        ->with([
+            'estadostipificacions' => $estadostipificacions,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -42,7 +69,11 @@ class estadostipificacionController extends AppBaseController
      */
     public function create()
     {
-        return view('llamadas.estadostipificacions.create');
+        return view('llamadas.estadostipificacions.create')
+        ->with([
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -60,27 +91,7 @@ class estadostipificacionController extends AppBaseController
 
         Flash::success('Estadostipificacion saved successfully.');
 
-        return redirect(route('llamadas.estadostipificacions.index'));
-    }
-
-    /**
-     * Display the specified estadostipificacion.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $estadostipificacion = $this->estadostipificacionRepository->find($id);
-
-        if (empty($estadostipificacion)) {
-            Flash::error('Estadostipificacion not found');
-
-            return redirect(route('estadostipificacions.index'));
-        }
-
-        return view('llamadas.estadostipificacions.show')->with('estadostipificacion', $estadostipificacion);
+        return redirect(route('estadostipificacions.index'));
     }
 
     /**
@@ -100,7 +111,12 @@ class estadostipificacionController extends AppBaseController
             return redirect(route('estadostipificacions.index'));
         }
 
-        return view('llamadas.estadostipificacions.edit')->with('estadostipificacion', $estadostipificacion);
+        return view('llamadas.estadostipificacions.edit')
+        ->with([
+            'estadostipificacion' => $estadostipificacion,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

@@ -7,7 +7,8 @@ use App\Http\Requests\UpdatehorariosRequest;
 use App\Repositories\horariosRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class horariosController extends AppBaseController
@@ -15,9 +16,31 @@ class horariosController extends AppBaseController
     /** @var horariosRepository $horariosRepository*/
     private $horariosRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(horariosRepository $horariosRepo)
     {
-        $this->horariosRepository = $horariosRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($horariosRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->horariosRepository = $horariosRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -32,7 +55,11 @@ class horariosController extends AppBaseController
         $horarios = $this->horariosRepository->all();
 
         return view('llamadas.horarios.index')
-            ->with('horarios', $horarios);
+            ->with([
+                'horarios' => $horarios,
+                'incluir_botones' => $this->incluir_botones,
+                'menu' => $this->menu,
+            ]);
     }
 
     /**
@@ -42,7 +69,11 @@ class horariosController extends AppBaseController
      */
     public function create()
     {
-        return view('llamadas.horarios.create');
+        return view('llamadas.horarios.create')
+        ->with([
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);;
     }
 
     /**
@@ -63,25 +94,6 @@ class horariosController extends AppBaseController
         return redirect(route('horarios.index'));
     }
 
-    /**
-     * Display the specified horarios.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $horarios = $this->horariosRepository->find($id);
-
-        if (empty($horarios)) {
-            Flash::error('Horarios not found');
-
-            return redirect(route('horarios.index'));
-        }
-
-        return view('llamadas.horarios.show')->with('horarios', $horarios);
-    }
 
     /**
      * Show the form for editing the specified horarios.
@@ -100,7 +112,12 @@ class horariosController extends AppBaseController
             return redirect(route('horarios.index'));
         }
 
-        return view('llamadas.horarios.edit')->with('horarios', $horarios);
+        return view('llamadas.horarios.edit')
+        ->with([
+            'horarios' => $horarios,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

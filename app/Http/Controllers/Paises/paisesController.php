@@ -7,7 +7,8 @@ use App\Http\Requests\UpdatepaisesRequest;
 use App\Repositories\paisesRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class paisesController extends AppBaseController
@@ -15,9 +16,31 @@ class paisesController extends AppBaseController
     /** @var paisesRepository $paisesRepository*/
     private $paisesRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
     public function __construct(paisesRepository $paisesRepo)
     {
-        $this->paisesRepository = $paisesRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($paisesRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->paisesRepository = $paisesRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -32,7 +55,11 @@ class paisesController extends AppBaseController
         $paises = $this->paisesRepository->all();
 
         return view('paises.index')
-            ->with('paises', $paises);
+        ->with([
+            'paises' => $paises,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -42,7 +69,11 @@ class paisesController extends AppBaseController
      */
     public function create()
     {
-        return view('paises.create');
+        return view('paises.create')
+        ->with([
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -64,26 +95,6 @@ class paisesController extends AppBaseController
     }
 
     /**
-     * Display the specified paises.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $paises = $this->paisesRepository->find($id);
-
-        if (empty($paises)) {
-            Flash::error('Paises not found');
-
-            return redirect(route('paises.index'));
-        }
-
-        return view('paises.show')->with('paises', $paises);
-    }
-
-    /**
      * Show the form for editing the specified paises.
      *
      * @param int $id
@@ -100,7 +111,12 @@ class paisesController extends AppBaseController
             return redirect(route('paises.index'));
         }
 
-        return view('paises.edit')->with('paises', $paises);
+        return view('paises.edit')
+        ->with([
+            'paises' => $paises,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**

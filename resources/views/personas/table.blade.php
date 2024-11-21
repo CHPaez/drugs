@@ -1,5 +1,5 @@
 <div style="overflow-x: auto;">
-<table class="table" >
+<table class="table" id="personas-table" >
                     <thead>
                         <tr>
                             <th>Id</th>
@@ -25,13 +25,8 @@
                             <td width="120">
                                 {!! Form::open(['route' => ['personas.destroy', $persona->Id], 'method' => 'delete']) !!}
                                 <div class='btn-group btn-group-sm'>
-                                    <a href="{{ route('personas.show', [$persona->Id]) }}" class='btn btn-outline-primary btn-sm'>
-                                    <i class="far fa-eye"></i> Ver
-                                    </a>
-                                    <a href="{{ route('personas.edit', [$persona->Id]) }}" class='btn btn-outline-success btn-sm'>
-                                    <i class="far fa-edit"></i> Editar
-                                    </a>
-                                    {!! Form::button('<i class="far fa-trash-alt"></i>Eliminar', ['type' => 'submit', 'class' => 'btn btn-outline-danger btn-sm', 'onclick' => "return confirm('Estas seguro?')"]) !!}
+                                    {!! $incluir_botones['editar'] !!}
+                                    {!! $incluir_botones['eliminar'] !!}
                                 </div>
                                 {!! Form::close() !!}
                             </td>

@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Create Paises</h1>
+                    <h4>Create Paises</h4>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                {!! $incluir_botones['guardar'] !!}
                 <a href="{{ route('paises.index') }}" class="btn btn-default">Cancel</a>
             </div>
 

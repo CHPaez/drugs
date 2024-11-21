@@ -1,34 +1,27 @@
 <div class="table-responsive">
     <table class="table" id="datosadicionales-table">
         <thead>
-        <tr>
-            <th>Id</th>
-        <th>Datos Adicionales</th>
-            <th colspan="3">Action</th>
-        </tr>
+            <tr>
+                <th>Id</th>
+                <th>Datos Adicionales</th>
+                <th colspan="3">Action</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach($datosadicionales as $datosadicionale)
-            <tr>
-                <td>{{ $datosadicionale->Id }}</td>
-            <td>{{ $datosadicionale->DaNombre }}</td>
-                <td width="120">
-                    {!! Form::open(['route' => ['datosadicionales.destroy', $datosadicionale->Id], 'method' => 'delete']) !!}
-                    <div class='btn-group'>
-                        <a href="{{ route('datosadicionales.show', [$datosadicionale->Id]) }}"
-                           class='btn btn-default btn-xs'>
-                            <i class="far fa-eye"></i>
-                        </a>
-                        <a href="{{ route('datosadicionales.edit', [$datosadicionale->Id]) }}"
-                           class='btn btn-default btn-xs'>
-                            <i class="far fa-edit"></i>
-                        </a>
-                        {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
-                    </div>
-                    {!! Form::close() !!}
-                </td>
-            </tr>
-        @endforeach
+            @foreach ($datosadicionales as $datosadicionale)
+                <tr>
+                    <td>{{ $datosadicionale->Id }}</td>
+                    <td>{{ $datosadicionale->DaNombre }}</td>
+                    <td width="120">
+                        {!! Form::open(['route' => ['datosadicionales.destroy', $datosadicionale->Id], 'method' => 'delete']) !!}
+                        <div class='btn-group'>
+                            {!! $incluir_botones['editar'] !!}
+                            {!! $incluir_botones['eliminar'] !!}
+                        </div>
+                        {!! Form::close() !!}
+                    </td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 </div>

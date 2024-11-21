@@ -5,14 +5,8 @@
             <div class="row mb-2">
                 <div class="col-sm-4">
                     <h3>Droguerias</h3>
+                    {!! $incluir_botones['crear'] !!}
                 </div>  
-                <div class="col-1">
-                <a class="btn btn-primary float-right"
-                       href="{{ route('droguerias.create') }}">
-                        Agregar
-                    </a>
-                </div>
-
             </div>
         </div>
     </section>
@@ -27,6 +21,22 @@
 
         </div>
     </div>
-
+    @stop
+    @section('js')
+    
+    <script>
+        $("#crear").click(function(){
+            let link = `{{route('droguerias.create')}}`; 
+            document.location.href = link;
+        })
+    
+        $("#droguerias-table #editar").click(function(){
+            let id_tel = $(this).closest('tr').find('td:first-child').text();
+            let link = `{{route('droguerias.edit', ':id')}}`.replace(':id', id_tel);
+            
+            document.location.href = link;
+        });
+    
+    </script>
 @endsection
 

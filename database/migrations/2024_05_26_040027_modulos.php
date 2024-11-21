@@ -15,7 +15,9 @@ class Modulos extends Migration
     {
         Schema::create('Modulos', function (Blueprint $table){
             $table->id();
-            $table->string('MoNombre')->unique();
+            $table->string('MoNombre')->default('null');
+            $table->string('MoSubmodulo')->default('null');
+            $table->integer('MoRoute');
             $table->text('MoDescripcion')->nullable();
             $table->timestamps();
         });

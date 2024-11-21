@@ -17,7 +17,7 @@ class modalidadesRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'Id',
+        'id',
         'MoNombre'
     ];
 

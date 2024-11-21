@@ -14,16 +14,8 @@
             <td>{{ $programa->PrNombre }}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['programas.destroy', $programa->Id], 'method' => 'delete']) !!}
-                    <div class='btn-group'>
-                        <a href="{{ route('programas.show', [$programa->Id]) }}"
-                           class='btn btn-default btn-xs'>
-                            <i class="far fa-eye"></i>
-                        </a>
-                        <a href="{{ route('programas.edit', [$programa->Id]) }}"
-                           class='btn btn-default btn-xs'>
-                            <i class="far fa-edit"></i>
-                        </a>
-                        {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                    {!! $incluir_botones['editar'] !!}
+                    {!! $incluir_botones['eliminar'] !!}
                     </div>
                     {!! Form::close() !!}
                 </td>

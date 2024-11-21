@@ -7,17 +7,41 @@ use App\Http\Requests\UpdateprogramasRequest;
 use App\Repositories\programasRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Flash;
+use Laracasts\Flash\Flash;
 use Response;
+use Illuminate\Support\Facades\Auth;
 
 class programasController extends AppBaseController
 {
     /** @var programasRepository $programasRepository*/
     private $programasRepository;
 
+    /** @var Array  botones dispobible en la  vista*/
+    private  $acciones_disponibles = [
+        "crear" => ['button','crear','crear'],
+        "guardar" => ['submit','guardar','btn_guardar'],
+        "actualizar" => ['submit','btn_actualizar','btn_actualizar'],
+        "editar" => ['button','editar','editar'],
+        "eliminar" => ['submit','eliminar','eliminar']
+    ];
+
+    /** @var Array Contine los botones disponibles para el usuario logueado */
+    private $incluir_botones;
+
+    /** @var Array Contine el menu con los hiperlinks disponibles para el usuario logueado */
+    private $menu;
+
+
     public function __construct(programasRepository $programasRepo)
     {
-        $this->programasRepository = $programasRepo;
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) use($programasRepo) {
+            $this->incluir_botones = $this->incluirBotones(Auth::user(),$this->acciones_disponibles,$request);
+            $this->menu = $this->init()->get_links();
+            $this->programasRepository = $programasRepo;
+
+            return $next($request);
+        });
     }
 
     /**
@@ -27,12 +51,16 @@ class programasController extends AppBaseController
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $programas = $this->programasRepository->all();
 
         return view('llamadas.programas.index')
-            ->with('programas', $programas);
+            ->with([
+                'programas' => $programas,
+                'incluir_botones' => $this->incluir_botones,
+                'menu' => $this->menu,
+            ]);
     }
 
     /**
@@ -42,7 +70,10 @@ class programasController extends AppBaseController
      */
     public function create()
     {
-        return view('llamadas.programas.create');
+        return view('llamadas.programas.create')->with([
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
@@ -64,26 +95,6 @@ class programasController extends AppBaseController
     }
 
     /**
-     * Display the specified programas.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        $programas = $this->programasRepository->find($id);
-
-        if (empty($programas)) {
-            Flash::error('Programas not found');
-
-            return redirect(route('llamadas.programas.index'));
-        }
-
-        return view('llamadas.programas.show')->with('programas', $programas);
-    }
-
-    /**
      * Show the form for editing the specified programas.
      *
      * @param int $id
@@ -100,7 +111,11 @@ class programasController extends AppBaseController
             return redirect(route('programas.index'));
         }
 
-        return view('llamadas.programas.edit')->with('programas', $programas);
+        return view('llamadas.programas.edit')->with([
+            'programas' => $programas,
+            'incluir_botones' => $this->incluir_botones,
+            'menu' => $this->menu,
+        ]);
     }
 
     /**
