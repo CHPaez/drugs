@@ -52,10 +52,10 @@ class AdministradorController extends AppBaseController
 
     /** Vista general del modulo de creacion de usuarios */
     public function index(){
-        $usuarios = $this->AdministracionRepository->all();
+        $datos_usuario = $this->AdministracionRepository->all();
 
         return view('Administracion/Usuarios/index')->with([
-            'usuarios' => $usuarios,
+            'usuarios' => $datos_usuario,
             'incluir_botones' => $this->incluir_botones,
             'menu' => $this->menu,
         ]);
